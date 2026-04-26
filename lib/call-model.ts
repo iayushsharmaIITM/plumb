@@ -1,4 +1,4 @@
-import { azureClient, deployments } from './models';
+import { deployments, getAzureClient } from './models';
 import { createServiceClient } from './supabase/server';
 import type { ModelCallOptions, ModelCallResult } from './types';
 
@@ -18,6 +18,7 @@ export async function callModel<T = unknown>(
   opts: ModelCallOptions
 ): Promise<ModelCallResult<T>> {
   const supabase = createServiceClient();
+  const azureClient = getAzureClient();
   let attempt = 0;
   let lastError: Error | null = null;
   const maxRetries = opts.max_retries ?? MAX_RETRIES;
