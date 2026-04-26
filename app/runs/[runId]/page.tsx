@@ -11,6 +11,12 @@ import {
   type BrowserTalentDatabase,
   type PipelineStage,
 } from '@/lib/pipeline/orchestrator';
+import {
+  buildLocalCandidates,
+  loadLocalCandidates,
+  loadLocalRun,
+  saveLocalCandidates,
+} from '@/lib/browser-local-run';
 import PipelineProgress from '@/components/plumb/pipeline-progress';
 import DiscoverySummary from '@/components/plumb/discovery-summary';
 import CohortSection from '@/components/plumb/cohort-section';
@@ -43,6 +49,7 @@ interface CandidateData {
 
 export default function RunDashboard() {
   const { runId } = useParams<{ runId: string }>();
+  const isLocalRun = runId.startsWith('local-');
   const [run, setRun] = useState<RunData | null>(null);
   const [candidates, setCandidates] = useState<CandidateData[]>([]);
   const [stage, setStage] = useState<PipelineStage | null>(null);
@@ -68,6 +75,34 @@ export default function RunDashboard() {
 
   // Initial load
   useEffect(() => {
+    if (isLocalRun) {
+      void Promise.resolve().then(() => {
+        const localRun = loadLocalRun(runId);
+        if (!localRun) {
+          setPipelineError('This browser-local run expired. Upload the database again to recreate it.');
+          setStage('complete');
+          return;
+        }
+
+        const cachedCandidates = loadLocalCandidates(runId);
+        const nextCandidates = cachedCandidates.length > 0
+          ? cachedCandidates
+          : buildLocalCandidates(localRun);
+        if (cachedCandidates.length === 0) saveLocalCandidates(runId, nextCandidates);
+
+        setRun({
+          id: runId,
+          status: 'complete',
+          jd_text: localRun.jd_text,
+          jd_parsed: null,
+          error_message: null,
+        });
+        setCandidates(nextCandidates);
+        setStage('complete');
+      });
+      return;
+    }
+
     async function load() {
       const res = await fetch(`/api/runs/${runId}`);
       if (res.ok) {
@@ -77,9 +112,10 @@ export default function RunDashboard() {
       }
     }
     load();
-  }, [runId]);
+  }, [isLocalRun, runId]);
 
   useEffect(() => {
+    if (isLocalRun) return;
     let active = true;
 
     async function loadInitialCandidates() {
@@ -96,10 +132,11 @@ export default function RunDashboard() {
 
     void loadInitialCandidates();
     return () => { active = false; };
-  }, [runId, refreshCandidates]);
+  }, [isLocalRun, runId, refreshCandidates]);
 
   // Realtime subscription
   useEffect(() => {
+    if (isLocalRun) return;
     const supabase = createBrowserClient();
 
     const channel = supabase
@@ -117,9 +154,10 @@ export default function RunDashboard() {
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
-  }, [runId, refreshCandidates]);
+  }, [isLocalRun, runId, refreshCandidates]);
 
   useEffect(() => {
+    if (isLocalRun) return;
     if (run?.status !== 'complete' || candidates.length > 0) return;
 
     const timer = window.setInterval(() => {
@@ -127,10 +165,11 @@ export default function RunDashboard() {
     }, 1500);
 
     return () => window.clearInterval(timer);
-  }, [run?.status, candidates.length, refreshCandidates]);
+  }, [isLocalRun, run?.status, candidates.length, refreshCandidates]);
 
   // Start pipeline if pending
   useEffect(() => {
+    if (isLocalRun) return;
     if (!run || startedRef.current) return;
     if (run.status === 'complete' || run.status === 'failed') return;
 
@@ -138,13 +177,12 @@ export default function RunDashboard() {
     runPipeline(runId, (s) => setStage(s)).catch((err) => {
       setPipelineError((err as Error).message);
     });
-  }, [run, runId]);
+  }, [isLocalRun, run, runId]);
 
   async function handleDecisionChange(candidateId: string, reviewDecision: CandidateReviewDecision) {
     setTopUpError(null);
     const previous = candidates;
-    setCandidates((current) =>
-      current.map((candidate) =>
+    const nextCandidates = candidates.map((candidate) =>
         candidate.id === candidateId
           ? {
               ...candidate,
@@ -152,8 +190,22 @@ export default function RunDashboard() {
               reviewed_at: reviewDecision === 'undecided' ? null : new Date().toISOString(),
             }
           : candidate
-      )
-    );
+      );
+    setCandidates(nextCandidates);
+
+    if (isLocalRun) {
+      const storedCandidates = loadLocalCandidates(runId).map((candidate) =>
+        candidate.id === candidateId
+          ? {
+              ...candidate,
+              review_decision: reviewDecision,
+              reviewed_at: reviewDecision === 'undecided' ? null : new Date().toISOString(),
+            }
+          : candidate
+      );
+      saveLocalCandidates(runId, storedCandidates);
+      return;
+    }
 
     const res = await fetch(`/api/runs/${runId}/candidates/${candidateId}`, {
       method: 'PATCH',
@@ -173,6 +225,21 @@ export default function RunDashboard() {
     setTopUpError(null);
 
     try {
+      if (isLocalRun) {
+        const localRun = loadLocalRun(runId);
+        if (!localRun) throw new Error('This browser-local run expired. Upload the database again.');
+        setStage('reranking');
+        const storedCandidates = loadLocalCandidates(runId);
+        const excluded = new Set(storedCandidates.map((candidate) => candidate.pool_candidate_id));
+        const additions = buildLocalCandidates(localRun, excluded, topUpCount);
+        if (additions.length === 0) throw new Error('no unseen candidates remain in the uploaded database');
+        const nextCandidates = [...storedCandidates, ...additions];
+        saveLocalCandidates(runId, nextCandidates);
+        setCandidates(nextCandidates);
+        setStage('complete');
+        return;
+      }
+
       await topUpPipeline(runId, topUpCount, (nextStage) => setStage(nextStage));
       await refreshCandidates();
     } catch (error) {

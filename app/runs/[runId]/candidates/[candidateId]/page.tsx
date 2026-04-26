@@ -8,6 +8,11 @@ import MatchBreakdown from '@/components/plumb/match-breakdown';
 import InterestScorecard from '@/components/plumb/interest-scorecard';
 import NextActionCard from '@/components/plumb/next-action-card';
 import { COHORT_META } from '@/components/plumb/cohort-section';
+import {
+  appendLocalConversation,
+  loadLocalCandidates,
+  type LocalCandidateData,
+} from '@/lib/browser-local-run';
 import { getDemoCandidate, getDemoTurns } from '@/lib/demo-fixture';
 import type { CandidateProfile, MatchEvidence, InterestEvidence, Cohort, InterestSignalName } from '@/lib/types';
 
@@ -42,6 +47,17 @@ export default function CandidateDrilldown() {
   const [rescoring, setRescoring] = useState(false);
 
   useEffect(() => {
+    if (runId.startsWith('local-')) {
+      void Promise.resolve().then(() => {
+        const localCandidate = loadLocalCandidates(runId)
+          .find((item) => item.id === candidateId) as LocalCandidateData | undefined;
+        setCandidate(localCandidate ? toCandidateData(localCandidate) : null);
+        setTurns(localCandidate?.turns ?? []);
+        setLoading(false);
+      });
+      return;
+    }
+
     if (runId === 'demo') {
       void Promise.resolve().then(() => {
         setCandidate(getDemoCandidate(candidateId) as CandidateData | null);
@@ -69,6 +85,14 @@ export default function CandidateDrilldown() {
   }, [runId, candidateId]);
 
   async function refreshCandidate() {
+    if (runId.startsWith('local-')) {
+      const localCandidate = loadLocalCandidates(runId)
+        .find((item) => item.id === candidateId) as LocalCandidateData | undefined;
+      setCandidate(localCandidate ? toCandidateData(localCandidate) : null);
+      setTurns(localCandidate?.turns ?? []);
+      return;
+    }
+
     const [candRes, turnsRes] = await Promise.all([
       fetch(`/api/runs/${runId}/candidates/${candidateId}`),
       fetch(`/api/runs/${runId}/candidates/${candidateId}/conversations`),
@@ -87,6 +111,15 @@ export default function CandidateDrilldown() {
     setChatError(null);
 
     try {
+      if (runId.startsWith('local-')) {
+        const result = appendLocalConversation(runId, candidateId, message);
+        if (!result.candidate) throw new Error('Local candidate not found');
+        setCandidate(toCandidateData(result.candidate));
+        setTurns(result.candidate.turns);
+        setChatMessage('');
+        return;
+      }
+
       const res = await fetch(`/api/runs/${runId}/candidates/${candidateId}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -368,4 +401,18 @@ export default function CandidateDrilldown() {
       </main>
     </div>
   );
+}
+
+function toCandidateData(candidate: LocalCandidateData): CandidateData {
+  return {
+    id: candidate.id,
+    profile_json: candidate.profile_json,
+    match_score: candidate.match_score,
+    match_evidence: candidate.match_evidence,
+    interest_score: candidate.interest_score,
+    interest_evidence: candidate.interest_evidence,
+    cohort: candidate.cohort,
+    next_action_draft: candidate.next_action_draft,
+    status: candidate.status,
+  };
 }

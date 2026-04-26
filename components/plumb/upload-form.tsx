@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { saveLocalRun } from '@/lib/browser-local-run';
 
 interface UploadFormProps {
   onSubmit: (runId: string) => void;
@@ -194,9 +195,9 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
     }
     setError('');
     setLoading(true);
+    const selectedDatabase = databases.find((database) => database.id === selectedDatabaseId);
+    const browserDatabase = selectedDatabase?.storage === 'browser' ? selectedDatabase : null;
     try {
-      const selectedDatabase = databases.find((database) => database.id === selectedDatabaseId);
-      const browserDatabase = selectedDatabase?.storage === 'browser' ? selectedDatabase : null;
       const res = await fetch('/api/runs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -223,6 +224,32 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
       }
       onSubmit(data.run_id);
     } catch (err) {
+      if (browserDatabase && browserDatabase.candidates) {
+        const localRunId = `local-${crypto.randomUUID?.() ?? Date.now().toString(36)}`;
+        saveLocalRun({
+          id: localRunId,
+          jd_text: jd,
+          recruiter_brief: brief || null,
+          talent_database: {
+            name: browserDatabase.name,
+            candidate_count: browserDatabase.candidate_count,
+            source_type: browserDatabase.source_type,
+            candidates: browserDatabase.candidates,
+          },
+          created_at: new Date().toISOString(),
+        });
+        sessionStorage.setItem(
+          `plumb:run-talent-database:${localRunId}`,
+          JSON.stringify({
+            name: browserDatabase.name,
+            candidate_count: browserDatabase.candidate_count,
+            source_type: browserDatabase.source_type,
+            candidates: browserDatabase.candidates,
+          })
+        );
+        onSubmit(localRunId);
+        return;
+      }
       setError((err as Error).message);
       if (requiresTurnstile) {
         window.turnstile?.reset(widgetIdRef.current ?? undefined);
