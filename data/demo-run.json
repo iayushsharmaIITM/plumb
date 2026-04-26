@@ -338,8 +338,8 @@
           }
         ],
         "risk_flags": [
-          "Raised questions about roadmap stability which could indicate hesitation if not addressed",
-          "Actively interviewing with other teams, potential for competing offers"
+          "Candidate asked about roadmap stability; address roadmap focus in the next conversation.",
+          "Candidate stated they are actively interviewing; confirm timeline before scheduling."
         ],
         "overall_reasoning": "The candidate shows high genuine interest through specific questions tailored to the role's challenges, positive affirmations of fit, and immediate availability for further discussions. They are actively in the market and seeking exactly the kind of production AI engineering work described. While they have a question about roadmap stability, they are still eager to proceed with a technical intro. This suggests the candidate is seriously considering the opportunity and is a strong potential fit."
       },
@@ -610,7 +610,7 @@
         ],
         "risk_flags": [
           "Frontend background at Prism Labs may lack the required 2+ years production ML/AI systems experience",
-          "Conditional interest based on roadmap stability and team focus"
+          "Candidate asked about roadmap stability; address roadmap focus in the next conversation."
         ],
         "overall_reasoning": "The candidate displays high genuine interest by asking specific questions about ownership, evals, agent loops, and roadmap while repeatedly affirming alignment with production-focused work. He is actively interviewing and immediately available this week, showing clear forward momentum toward next steps. Concerns are surfaced constructively rather than as blockers. Overall this is a strong interest level with good motivation fit for the agentic AI role."
       },
@@ -901,8 +901,7 @@
         "risk_flags": [
           "Candidate is very happy at current role and not actively looking",
           "Requires very specific reason to consider move but does not articulate what it would be",
-          "Cannot move quickly and reviews materials only on own relaxed timeline",
-          "No questions asked about tech stack or problems despite role overlap"
+          "Cannot move quickly and reviews materials only on own relaxed timeline"
         ],
         "overall_reasoning": "The candidate exhibits low genuine interest, responding politely but passively throughout. She repeatedly notes being happy at Anthropic and needing a very specific reason to consider anything else without asking questions or engaging the role's described problems. No substantive next steps are embraced beyond receiving a summary and keeping in touch. This profile fits someone not actively on the market and only mildly open to outreach."
       },

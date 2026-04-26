@@ -139,6 +139,42 @@ function chooseSpan(content: string, needle: string): string {
   return (sentences[0] ?? content).trim().slice(0, 180);
 }
 
+function sanitizeInterestEvidence(evidence: InterestEvidence): InterestEvidence {
+  return {
+    ...evidence,
+    risk_flags: (evidence.risk_flags ?? [])
+      .map((flag) => sanitizeFollowUpCheck(flag))
+      .filter(Boolean)
+      .slice(0, 3),
+  };
+}
+
+function sanitizeFollowUpCheck(flag: string): string {
+  const lower = flag.toLowerCase();
+
+  if (lower.includes('roadmap stability')) {
+    return 'Candidate asked about roadmap stability; address roadmap focus in the next conversation.';
+  }
+  if (lower.includes('actively interviewing') || lower.includes('competing offer')) {
+    return 'Candidate stated they are actively interviewing; confirm timeline before scheduling.';
+  }
+  if (lower.includes('fallback score')) {
+    return 'Fallback scoring was used; recruiter should review the cited transcript spans.';
+  }
+
+  return flag
+    .replace(/\bwhich could indicate\b/gi, ';')
+    .replace(/\bcould indicate\b/gi, 'needs recruiter follow-up on')
+    .replace(/\bpotential for\b/gi, 'confirm')
+    .replace(/\bpotential of\b/gi, 'confirm')
+    .replace(/\bmay signal\b/gi, 'needs recruiter follow-up on')
+    .replace(/\bmight mean\b/gi, 'needs recruiter follow-up on')
+    .replace(/\bsuggests?\b/gi, 'requires follow-up on')
+    .replace(/\blikely\b/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ runId: string; candidateId: string }> }
@@ -206,7 +242,8 @@ export async function POST(
       throw new Error(`score returned ${content.signals?.length ?? 0} signals (expected 5)`);
     }
 
-    const interestScore = content.signals.reduce(
+    const sanitizedContent = sanitizeInterestEvidence(content);
+    const interestScore = sanitizedContent.signals.reduce(
       (sum, s) => sum + Math.max(0, Math.min(20, s.score)),
       0
     );
@@ -217,7 +254,7 @@ export async function POST(
       .from('candidates')
       .update({
         interest_score: interestScore,
-        interest_evidence: content,
+        interest_evidence: sanitizedContent,
         cohort,
       })
       .eq('id', candidateId);
@@ -231,7 +268,7 @@ export async function POST(
       speaker: t.speaker,
       content: t.content,
     }));
-    const content = buildFallbackInterestEvidence(profile, transcript);
+    const content = sanitizeInterestEvidence(buildFallbackInterestEvidence(profile, transcript));
     const interestScore = content.signals.reduce(
       (sum, signal) => sum + Math.max(0, Math.min(20, signal.score)),
       0

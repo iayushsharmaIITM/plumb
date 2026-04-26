@@ -46,7 +46,7 @@ Return ONLY valid JSON matching this exact schema:
     }
   ],
   "overall_reasoning": "3-4 sentences: overall read on the candidate's genuine interest level",
-  "risk_flags": ["string — risks a recruiter should know about, e.g. 'Candidate deflected on comp questions, suggests high comp gap'"]
+  "risk_flags": ["string — transcript-grounded follow-up checks for the recruiter, not speculative predictions"]
 }
 
 CRITICAL SPAN RULES:
@@ -55,6 +55,10 @@ CRITICAL SPAN RULES:
 - Quote at most 1-2 spans per signal — prioritize the strongest evidence.
 - Do NOT paraphrase. Do NOT use ellipses. Do NOT modify punctuation. Do NOT add quotes around spans.
 - If no evidence exists for a signal, score it low but still cite the best available span or use an empty evidence array.
+- risk_flags must be grounded in explicit transcript evidence. Write them as recruiter follow-up checks, not predictions.
+- Do NOT use speculative phrases like "could indicate", "potential for", "suggests", "likely", "may signal", or "might mean".
+- Good risk_flags examples: "Candidate asked about roadmap stability; address roadmap focus in the next conversation." "Candidate stated they are actively interviewing; confirm timeline before scheduling."
+- If there is no explicit follow-up issue in the transcript, return an empty risk_flags array.
 
 Return ONLY the JSON. No markdown.`;
 

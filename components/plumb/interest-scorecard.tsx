@@ -20,6 +20,7 @@ interface InterestScorecardProps {
 
 export default function InterestScorecard({ interestScore, evidence, activeSignal, onSignalClick }: InterestScorecardProps) {
   const [expanded, setExpanded] = useState(false);
+  const followUpChecks = normalizeFollowUpChecks(evidence.risk_flags);
 
   return (
     <div className="space-y-4">
@@ -81,14 +82,15 @@ export default function InterestScorecard({ interestScore, evidence, activeSigna
         })}
       </div>
 
-      {/* Risk flags */}
-      {evidence.risk_flags.length > 0 && (
+      {/* Follow-up checks */}
+      {followUpChecks.length > 0 && (
         <div className="space-y-2 pt-2 border-t border-border">
-          <h4 className="text-xs font-semibold text-amber-400 uppercase tracking-wider">Risk Flags</h4>
+          <h4 className="text-xs font-semibold text-amber-400 uppercase tracking-wider">Follow-Up Checks</h4>
           <ul className="space-y-1">
-            {evidence.risk_flags.map((f, i) => (
+            {followUpChecks.map((f, i) => (
               <li key={i} className="text-xs text-amber-300/80 flex gap-2">
-                <span>⚡</span>{f}
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
+                <span>{f}</span>
               </li>
             ))}
           </ul>
@@ -122,4 +124,37 @@ function getSignalColorKey(key: InterestSignalName): string {
     motivation_alignment: 'motivation',
   };
   return map[key];
+}
+
+function normalizeFollowUpChecks(flags: string[]): string[] {
+  return flags
+    .map((flag) => normalizeFollowUpCheck(flag))
+    .filter(Boolean)
+    .slice(0, 3);
+}
+
+function normalizeFollowUpCheck(flag: string): string {
+  const lower = flag.toLowerCase();
+
+  if (lower.includes('roadmap stability')) {
+    return 'Candidate asked about roadmap stability; address roadmap focus in the next conversation.';
+  }
+  if (lower.includes('actively interviewing') || lower.includes('competing offer')) {
+    return 'Candidate stated they are actively interviewing; confirm timeline before scheduling.';
+  }
+  if (lower.includes('fallback score')) {
+    return 'Fallback scoring was used; recruiter should review the cited transcript spans.';
+  }
+
+  return flag
+    .replace(/\bwhich could indicate\b/gi, ';')
+    .replace(/\bcould indicate\b/gi, 'needs recruiter follow-up on')
+    .replace(/\bpotential for\b/gi, 'confirm')
+    .replace(/\bpotential of\b/gi, 'confirm')
+    .replace(/\bmay signal\b/gi, 'needs recruiter follow-up on')
+    .replace(/\bmight mean\b/gi, 'needs recruiter follow-up on')
+    .replace(/\bsuggests?\b/gi, 'requires follow-up on')
+    .replace(/\blikely\b/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
 }
