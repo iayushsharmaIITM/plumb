@@ -1,5 +1,6 @@
 .env
 .env.*
+vercel-import.env
 .next
 node_modules
 *.tsbuildinfo
