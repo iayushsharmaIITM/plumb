@@ -4,7 +4,13 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { createBrowserClient } from '@/lib/supabase/browser';
-import { runPipeline, topUpPipeline, type PipelineStage } from '@/lib/pipeline/orchestrator';
+import {
+  loadBrowserTalentDatabase,
+  runPipeline,
+  topUpPipeline,
+  type BrowserTalentDatabase,
+  type PipelineStage,
+} from '@/lib/pipeline/orchestrator';
 import PipelineProgress from '@/components/plumb/pipeline-progress';
 import DiscoverySummary from '@/components/plumb/discovery-summary';
 import CohortSection from '@/components/plumb/cohort-section';
@@ -45,6 +51,9 @@ export default function RunDashboard() {
   const [topUpCount, setTopUpCount] = useState(2);
   const [topUpLoading, setTopUpLoading] = useState(false);
   const [topUpError, setTopUpError] = useState<string | null>(null);
+  const [browserTalentDatabase] = useState<BrowserTalentDatabase | null>(() =>
+    loadBrowserTalentDatabase(runId)
+  );
   const startedRef = useRef(false);
 
   const refreshCandidates = useCallback(async () => {
@@ -181,7 +190,9 @@ export default function RunDashboard() {
   }
   const selectedCount = candidates.filter((candidate) => candidate.review_decision === 'selected').length;
   const reviewedCount = candidates.filter((candidate) => candidate.review_decision !== 'undecided').length;
-  const unseenCount = Math.max(0, 120 - candidates.length);
+  const scannedCount = browserTalentDatabase?.candidate_count ?? 120;
+  const sourceLabel = browserTalentDatabase?.name ?? 'Seeded ATS + portfolio corpus';
+  const unseenCount = Math.max(0, scannedCount - candidates.length);
 
   return (
     <div className="min-h-screen">
@@ -216,9 +227,9 @@ export default function RunDashboard() {
 
         {candidates.length > 0 && (
           <DiscoverySummary
-            scannedCount={120}
+            scannedCount={scannedCount}
             shortlistedCount={candidates.length}
-            sourceLabel="Seeded ATS + portfolio corpus"
+            sourceLabel={sourceLabel}
           />
         )}
 

@@ -25,19 +25,20 @@ export async function GET() {
       return NextResponse.json({
         databases: [SEEDED_DATABASE],
         schema_ready: false,
-        warning: 'Apply supabase/migrations/005_talent_databases.sql to enable uploads.',
+        upload_mode: 'browser',
       });
     }
 
     return NextResponse.json({
       databases: [SEEDED_DATABASE, ...(data ?? [])],
       schema_ready: true,
+      upload_mode: 'persistent',
     });
   } catch {
     return NextResponse.json({
       databases: [SEEDED_DATABASE],
       schema_ready: false,
-      warning: 'Production environment is not configured for database uploads yet.',
+      upload_mode: 'browser',
     });
   }
 }

@@ -11,6 +11,8 @@ interface TalentDatabaseSummary {
   name: string;
   candidate_count: number;
   source_type: string;
+  storage?: 'server' | 'browser';
+  candidates?: unknown[];
 }
 
 const SEEDED_DATABASE_ID = 'seeded-120';
@@ -53,6 +55,7 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
   ]);
   const [selectedDatabaseId, setSelectedDatabaseId] = useState(SEEDED_DATABASE_ID);
   const [uploadingDatabase, setUploadingDatabase] = useState(false);
+  const [persistentUploadsReady, setPersistentUploadsReady] = useState(false);
   const [databaseMessage, setDatabaseMessage] = useState('');
   const [databaseWarning, setDatabaseWarning] = useState('');
   const turnstileRef = useRef<HTMLDivElement>(null);
@@ -110,11 +113,14 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
         const res = await fetch('/api/talent-databases', { cache: 'no-store' });
         const data = await res.json();
         if (Array.isArray(data.databases)) {
-          setDatabases(data.databases);
+          setDatabases(data.databases.map((database: TalentDatabaseSummary) => ({
+            ...database,
+            storage: 'server',
+          })));
         }
-        if (data.warning) setDatabaseWarning(data.warning);
+        setPersistentUploadsReady(Boolean(data.schema_ready));
       } catch {
-        setDatabaseWarning('Using the seeded corpus; uploaded databases are unavailable in this environment.');
+        setPersistentUploadsReady(false);
       }
     }
 
@@ -133,20 +139,45 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
     try {
       const text = await file.text();
       const candidates = parseCandidateFile(text, file.name);
-      const res = await fetch('/api/talent-databases', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: file.name.replace(/\.[^.]+$/, ''),
-          candidates,
-        }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Database upload failed');
+      const databaseName = file.name.replace(/\.[^.]+$/, '');
 
-      setDatabases((current) => [current[0], data.database, ...current.slice(1)]);
-      setSelectedDatabaseId(data.database.id);
-      setDatabaseMessage(`Uploaded ${data.database.candidate_count} candidates from ${file.name}.`);
+      if (persistentUploadsReady) {
+        try {
+          const res = await fetch('/api/talent-databases', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: databaseName,
+              candidates,
+            }),
+          });
+          const data = await res.json();
+          if (!res.ok) throw new Error(data.error || 'Database upload failed');
+
+          const serverDatabase: TalentDatabaseSummary = {
+            ...data.database,
+            storage: 'server',
+          };
+          setDatabases((current) => upsertDatabase(current, serverDatabase));
+          setSelectedDatabaseId(serverDatabase.id);
+          setDatabaseMessage(`Uploaded ${serverDatabase.candidate_count} candidates from ${file.name}.`);
+          return;
+        } catch {
+          setPersistentUploadsReady(false);
+        }
+      }
+
+      const browserDatabase: TalentDatabaseSummary = {
+        id: `browser-${crypto.randomUUID?.() ?? Date.now().toString(36)}`,
+        name: databaseName,
+        candidate_count: candidates.length,
+        source_type: 'browser_upload',
+        storage: 'browser',
+        candidates,
+      };
+      setDatabases((current) => upsertDatabase(current, browserDatabase));
+      setSelectedDatabaseId(browserDatabase.id);
+      setDatabaseMessage(`Loaded ${browserDatabase.candidate_count} candidates from ${file.name}. This run will match against that file.`);
     } catch (uploadError) {
       setDatabaseWarning((uploadError as Error).message);
     } finally {
@@ -164,18 +195,32 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
     setError('');
     setLoading(true);
     try {
+      const selectedDatabase = databases.find((database) => database.id === selectedDatabaseId);
+      const browserDatabase = selectedDatabase?.storage === 'browser' ? selectedDatabase : null;
       const res = await fetch('/api/runs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           jd_text: jd,
           recruiter_brief: brief || null,
-          talent_database_id: selectedDatabaseId === SEEDED_DATABASE_ID ? null : selectedDatabaseId,
+          talent_database_id:
+            selectedDatabaseId === SEEDED_DATABASE_ID || browserDatabase ? null : selectedDatabaseId,
           turnstile_token: turnstileToken,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to create run');
+      if (browserDatabase && browserDatabase.candidates) {
+        sessionStorage.setItem(
+          `plumb:run-talent-database:${data.run_id}`,
+          JSON.stringify({
+            name: browserDatabase.name,
+            candidate_count: browserDatabase.candidate_count,
+            source_type: browserDatabase.source_type,
+            candidates: browserDatabase.candidates,
+          })
+        );
+      }
       onSubmit(data.run_id);
     } catch (err) {
       setError((err as Error).message);
@@ -369,4 +414,15 @@ function csvRows(text: string): string[][] {
   row.push(cell);
   rows.push(row);
   return rows;
+}
+
+function upsertDatabase(
+  databases: TalentDatabaseSummary[],
+  nextDatabase: TalentDatabaseSummary
+): TalentDatabaseSummary[] {
+  const seeded = databases.find((database) => database.id === SEEDED_DATABASE_ID) ?? databases[0];
+  const rest = databases.filter((database) =>
+    database.id !== SEEDED_DATABASE_ID && database.id !== nextDatabase.id
+  );
+  return [seeded, nextDatabase, ...rest];
 }

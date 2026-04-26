@@ -3,7 +3,12 @@ import { createServiceClient } from '@/lib/supabase/server';
 import { callModel } from '@/lib/call-model';
 import { stageDeployment } from '@/lib/models';
 import { RERANK_SYSTEM, buildRerankUserMessage } from '@/lib/prompts/rerank';
-import { loadSeededTalentPool, SEEDED_DATABASE_ID, type TalentPool } from '@/lib/talent-database';
+import {
+  loadSeededTalentPool,
+  normalizeUploadedCandidates,
+  SEEDED_DATABASE_ID,
+  type TalentPool,
+} from '@/lib/talent-database';
 import type { CandidateProfile, HiddenState, MatchEvidence, ParsedJD, RerankResult } from '@/lib/types';
 
 export const runtime = 'nodejs';
@@ -70,6 +75,32 @@ async function loadRunTalentPool(
     pool,
     hidden,
     sourceLabel: database?.name ?? 'Uploaded talent database',
+  };
+}
+
+function buildUploadedTalentPool(value: unknown): TalentPool | null {
+  if (!isRecord(value) || !Array.isArray(value.candidates) || value.candidates.length === 0) {
+    return null;
+  }
+  if (value.candidates.length > 500) {
+    throw new Error('Uploaded browser database is limited to 500 candidates.');
+  }
+
+  const normalized = normalizeUploadedCandidates(value.candidates);
+  const unique = new Map(normalized.map((candidate) => [candidate.profile.id, candidate]));
+  const candidates = Array.from(unique.values());
+  const hidden: Record<string, HiddenState> = {};
+
+  for (const candidate of candidates) {
+    if (candidate.hiddenState) hidden[candidate.profile.id] = candidate.hiddenState;
+  }
+
+  return {
+    pool: candidates.map((candidate) => candidate.profile),
+    hidden,
+    sourceLabel: typeof value.name === 'string' && value.name.trim()
+      ? value.name.trim()
+      : 'Browser uploaded talent database',
   };
 }
 
@@ -224,11 +255,12 @@ function bestProfileCitation(profile: CandidateProfile): string {
 }
 
 export async function POST(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ runId: string }> }
 ) {
   const { runId } = await params;
   const supabase = createServiceClient();
+  const body = await req.json().catch(() => ({} as Record<string, unknown>));
 
   let { data: run, error: runErr } = await supabase
     .from('runs')
@@ -264,10 +296,9 @@ export async function POST(
   await supabase.from('runs').update({ status: 'reranking' }).eq('id', runId);
 
   try {
-    const { pool, hidden } = await loadRunTalentPool(
-      supabase,
-      (run.talent_database_id as string | null) ?? null
-    );
+    const talentPool = buildUploadedTalentPool(body.talent_database) ??
+      (await loadRunTalentPool(supabase, (run.talent_database_id as string | null) ?? null));
+    const { pool, hidden } = talentPool;
     const poolJson = JSON.stringify(pool.map(compactProfile));
     const parsedJdStr = JSON.stringify(run.jd_parsed);
 
@@ -340,4 +371,8 @@ export async function POST(
       .eq('id', runId);
     return NextResponse.json({ error: message }, { status: 500 });
   }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return Boolean(value && typeof value === 'object' && !Array.isArray(value));
 }
