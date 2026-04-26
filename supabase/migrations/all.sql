@@ -51,13 +51,24 @@ create table if not exists candidates (
 create index if not exists idx_candidates_run_id on candidates(run_id);
 create index if not exists idx_candidates_status on candidates(status);
 create unique index if not exists idx_candidates_run_pool_unique on candidates(run_id, pool_candidate_id);
-create index if not exists idx_candidates_review_decision on candidates(run_id, review_decision);
 
 alter table candidates
-  add column if not exists review_decision text not null default 'undecided';
+  add column if not exists review_decision text;
+
+update candidates
+set review_decision = 'undecided'
+where review_decision is null;
+
+alter table candidates
+  alter column review_decision set default 'undecided';
+
+alter table candidates
+  alter column review_decision set not null;
 
 alter table candidates
   add column if not exists reviewed_at timestamptz;
+
+create index if not exists idx_candidates_review_decision on candidates(run_id, review_decision);
 
 do $$
 begin
