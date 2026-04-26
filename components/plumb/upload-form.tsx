@@ -6,6 +6,15 @@ interface UploadFormProps {
   onSubmit: (runId: string) => void;
 }
 
+interface TalentDatabaseSummary {
+  id: string;
+  name: string;
+  candidate_count: number;
+  source_type: string;
+}
+
+const SEEDED_DATABASE_ID = 'seeded-120';
+
 declare global {
   interface Window {
     turnstile?: {
@@ -34,6 +43,18 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
   const [error, setError] = useState('');
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [turnstileReady, setTurnstileReady] = useState(!requiresTurnstile);
+  const [databases, setDatabases] = useState<TalentDatabaseSummary[]>([
+    {
+      id: SEEDED_DATABASE_ID,
+      name: 'Seeded ATS + portfolio corpus',
+      candidate_count: 120,
+      source_type: 'seeded',
+    },
+  ]);
+  const [selectedDatabaseId, setSelectedDatabaseId] = useState(SEEDED_DATABASE_ID);
+  const [uploadingDatabase, setUploadingDatabase] = useState(false);
+  const [databaseMessage, setDatabaseMessage] = useState('');
+  const [databaseWarning, setDatabaseWarning] = useState('');
   const turnstileRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
 
@@ -83,6 +104,57 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
     return () => script.removeEventListener('load', renderWidget);
   }, [requiresTurnstile, siteKey]);
 
+  useEffect(() => {
+    async function loadDatabases() {
+      try {
+        const res = await fetch('/api/talent-databases', { cache: 'no-store' });
+        const data = await res.json();
+        if (Array.isArray(data.databases)) {
+          setDatabases(data.databases);
+        }
+        if (data.warning) setDatabaseWarning(data.warning);
+      } catch {
+        setDatabaseWarning('Using the seeded corpus; uploaded databases are unavailable in this environment.');
+      }
+    }
+
+    void loadDatabases();
+  }, []);
+
+  async function handleDatabaseUpload(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setUploadingDatabase(true);
+    setDatabaseMessage('');
+    setDatabaseWarning('');
+    setError('');
+
+    try {
+      const text = await file.text();
+      const candidates = parseCandidateFile(text, file.name);
+      const res = await fetch('/api/talent-databases', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: file.name.replace(/\.[^.]+$/, ''),
+          candidates,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Database upload failed');
+
+      setDatabases((current) => [current[0], data.database, ...current.slice(1)]);
+      setSelectedDatabaseId(data.database.id);
+      setDatabaseMessage(`Uploaded ${data.database.candidate_count} candidates from ${file.name}.`);
+    } catch (uploadError) {
+      setDatabaseWarning((uploadError as Error).message);
+    } finally {
+      event.target.value = '';
+      setUploadingDatabase(false);
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (jd.trim().length < 50) {
@@ -98,6 +170,7 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
         body: JSON.stringify({
           jd_text: jd,
           recruiter_brief: brief || null,
+          talent_database_id: selectedDatabaseId === SEEDED_DATABASE_ID ? null : selectedDatabaseId,
           turnstile_token: turnstileToken,
         }),
       });
@@ -133,8 +206,57 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
         />
         <p className="text-xs text-zinc-500">
           {jd.length < 50 ? `${50 - jd.length} more characters needed` : `${jd.length.toLocaleString()} characters`}
-          {' '}· the agent will scout the seeded 120-profile talent corpus
+          {' '}· the agent will scout the selected candidate database
         </p>
+      </div>
+
+      {/* Talent database selector */}
+      <div className="space-y-3 rounded-xl border border-border bg-surface-1 p-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <label htmlFor="database-select" className="block text-sm font-medium text-zinc-300">
+              Candidate Database
+            </label>
+            <p className="mt-1 text-xs text-zinc-600">
+              Upload a real candidate JSON/CSV, then choose it for this JD.
+            </p>
+          </div>
+          <label className="inline-flex cursor-pointer items-center justify-center rounded-lg border border-border bg-surface-2 px-3 py-2 text-xs font-semibold text-zinc-300 transition-colors hover:bg-surface-3">
+            {uploadingDatabase ? 'Uploading...' : 'Upload database'}
+            <input
+              type="file"
+              accept=".json,.csv,application/json,text/csv"
+              className="sr-only"
+              onChange={handleDatabaseUpload}
+              disabled={uploadingDatabase || loading}
+            />
+          </label>
+        </div>
+
+        <select
+          id="database-select"
+          value={selectedDatabaseId}
+          onChange={(event) => setSelectedDatabaseId(event.target.value)}
+          className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm text-foreground focus:border-brand focus:outline-none"
+          disabled={loading}
+        >
+          {databases.map((database) => (
+            <option key={database.id} value={database.id}>
+              {database.name} · {database.candidate_count} candidates
+            </option>
+          ))}
+        </select>
+
+        {databaseMessage && (
+          <p className="rounded-lg border border-recommended/20 bg-recommended/10 px-3 py-2 text-xs text-recommended">
+            {databaseMessage}
+          </p>
+        )}
+        {databaseWarning && (
+          <p className="rounded-lg border border-amber-500/20 bg-amber-500/10 px-3 py-2 text-xs text-amber-300">
+            {databaseWarning}
+          </p>
+        )}
       </div>
 
       {/* Recruiter Brief */}
@@ -188,4 +310,63 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
       </button>
     </form>
   );
+}
+
+function parseCandidateFile(text: string, filename: string): unknown[] {
+  if (filename.toLowerCase().endsWith('.csv')) {
+    return parseCsv(text);
+  }
+
+  const parsed = JSON.parse(text);
+  if (Array.isArray(parsed)) return parsed;
+  if (Array.isArray(parsed.candidates)) return parsed.candidates;
+  throw new Error('JSON upload must be an array or an object with a candidates array.');
+}
+
+function parseCsv(text: string): Record<string, string>[] {
+  const rows = csvRows(text).filter((row) => row.some((cell) => cell.trim()));
+  if (rows.length < 2) throw new Error('CSV upload needs a header row and at least one candidate row.');
+
+  const headers = rows[0].map((header) => header.trim().toLowerCase());
+  return rows.slice(1).map((row) => {
+    const item: Record<string, string> = {};
+    headers.forEach((header, index) => {
+      item[header] = row[index]?.trim() ?? '';
+    });
+    return item;
+  });
+}
+
+function csvRows(text: string): string[][] {
+  const rows: string[][] = [];
+  let row: string[] = [];
+  let cell = '';
+  let quoted = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const next = text[i + 1];
+
+    if (char === '"' && quoted && next === '"') {
+      cell += '"';
+      i++;
+    } else if (char === '"') {
+      quoted = !quoted;
+    } else if (char === ',' && !quoted) {
+      row.push(cell);
+      cell = '';
+    } else if ((char === '\n' || char === '\r') && !quoted) {
+      if (char === '\r' && next === '\n') i++;
+      row.push(cell);
+      rows.push(row);
+      row = [];
+      cell = '';
+    } else {
+      cell += char;
+    }
+  }
+
+  row.push(cell);
+  rows.push(row);
+  return rows;
 }

@@ -43,7 +43,12 @@ export async function POST(req: NextRequest) {
     req.headers.get('x-real-ip') ??
     'unknown';
 
-  let body: { jd_text?: string; recruiter_brief?: string | null; turnstile_token?: string | null };
+  let body: {
+    jd_text?: string;
+    recruiter_brief?: string | null;
+    turnstile_token?: string | null;
+    talent_database_id?: string | null;
+  };
   try {
     body = await req.json();
   } catch {
@@ -65,16 +70,41 @@ export async function POST(req: NextRequest) {
   }
 
   const supabase = createServiceClient();
-  const { data, error } = await supabase
+  const insertPayload = {
+    jd_text: body.jd_text,
+    recruiter_brief: body.recruiter_brief ?? null,
+    talent_database_id: body.talent_database_id || null,
+    status: 'pending',
+    client_ip: ip,
+  };
+
+  let { data, error } = await supabase
     .from('runs')
-    .insert({
+    .insert(insertPayload)
+    .select('id')
+    .single();
+
+  if (error && error.message.includes('talent_database_id')) {
+    if (body.talent_database_id) {
+      return NextResponse.json({
+        error: 'Talent database selection requires supabase/migrations/005_talent_databases.sql.',
+      }, { status: 409 });
+    }
+
+    const fallbackPayload = {
       jd_text: body.jd_text,
       recruiter_brief: body.recruiter_brief ?? null,
       status: 'pending',
       client_ip: ip,
-    })
-    .select('id')
-    .single();
+    };
+    const fallback = await supabase
+      .from('runs')
+      .insert(fallbackPayload)
+      .select('id')
+      .single();
+    data = fallback.data;
+    error = fallback.error;
+  }
 
   if (error || !data) {
     return NextResponse.json({ error: error?.message ?? 'insert failed' }, { status: 500 });

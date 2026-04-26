@@ -1,27 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { readFileSync } from 'fs';
-import path from 'path';
 import { createServiceClient } from '@/lib/supabase/server';
 import { callModel } from '@/lib/call-model';
 import { stageDeployment } from '@/lib/models';
 import { TOP_UP_SYSTEM, buildTopUpUserMessage } from '@/lib/prompts/rerank';
+import { loadSeededTalentPool, SEEDED_DATABASE_ID, type TalentPool } from '@/lib/talent-database';
 import type { CandidateProfile, HiddenState, MatchEvidence, ParsedJD, RerankResult } from '@/lib/types';
 
 export const runtime = 'nodejs';
 export const maxDuration = 60;
-
-let poolCache: CandidateProfile[] | null = null;
-let hiddenCache: Record<string, HiddenState> | null = null;
-
-function loadPool(): { pool: CandidateProfile[]; hidden: Record<string, HiddenState> } {
-  if (!poolCache || !hiddenCache) {
-    const poolPath = path.join(process.cwd(), 'data/pool.json');
-    const hiddenPath = path.join(process.cwd(), 'data/hidden-states.json');
-    poolCache = JSON.parse(readFileSync(poolPath, 'utf8')) as CandidateProfile[];
-    hiddenCache = JSON.parse(readFileSync(hiddenPath, 'utf8')) as Record<string, HiddenState>;
-  }
-  return { pool: poolCache, hidden: hiddenCache };
-}
 
 function compactProfile(profile: CandidateProfile) {
   return {
@@ -46,6 +32,44 @@ function compactProfile(profile: CandidateProfile) {
     open_source_contributions: profile.open_source_contributions?.slice(0, 3),
     recent_signals: profile.recent_signals.slice(0, 3),
     stated_preferences: profile.stated_preferences,
+  };
+}
+
+async function loadRunTalentPool(
+  supabase: ReturnType<typeof createServiceClient>,
+  talentDatabaseId: string | null
+): Promise<TalentPool> {
+  if (!talentDatabaseId || talentDatabaseId === SEEDED_DATABASE_ID) {
+    return loadSeededTalentPool();
+  }
+
+  const [{ data: database }, { data: rows, error }] = await Promise.all([
+    supabase
+      .from('talent_databases')
+      .select('name')
+      .eq('id', talentDatabaseId)
+      .single(),
+    supabase
+      .from('talent_database_candidates')
+      .select('pool_candidate_id, profile_json, persona_hidden_state')
+      .eq('database_id', talentDatabaseId)
+      .order('created_at', { ascending: true }),
+  ]);
+
+  if (error) throw new Error(`selected talent database is unavailable: ${error.message}`);
+  const pool = (rows ?? []).map((row) => row.profile_json as CandidateProfile);
+  const hidden: Record<string, HiddenState> = {};
+  for (const row of rows ?? []) {
+    if (row.persona_hidden_state) {
+      hidden[row.pool_candidate_id as string] = row.persona_hidden_state as HiddenState;
+    }
+  }
+
+  if (pool.length === 0) throw new Error('selected talent database has no candidates');
+  return {
+    pool,
+    hidden,
+    sourceLabel: database?.name ?? 'Uploaded talent database',
   };
 }
 
@@ -258,17 +282,29 @@ export async function POST(
   }
   const needed = sanitizeNeeded(body.needed);
 
-  const [{ data: run, error: runErr }, { data: existing, error: existingErr }] = await Promise.all([
-    supabase
+  const runResult = await supabase
+    .from('runs')
+    .select('jd_parsed, recruiter_brief, talent_database_id')
+    .eq('id', runId)
+    .single();
+
+  let run = runResult.data as ({ jd_parsed: unknown; recruiter_brief: string | null; talent_database_id: string | null } | null);
+  let runErr = runResult.error;
+
+  if (runErr && runErr.message.includes('talent_database_id')) {
+    const fallback = await supabase
       .from('runs')
       .select('jd_parsed, recruiter_brief')
       .eq('id', runId)
-      .single(),
-    supabase
-      .from('candidates')
-      .select('id, pool_candidate_id')
-      .eq('run_id', runId),
-  ]);
+      .single();
+    run = fallback.data ? { ...fallback.data, talent_database_id: null } : null;
+    runErr = fallback.error;
+  }
+
+  const { data: existing, error: existingErr } = await supabase
+    .from('candidates')
+    .select('id, pool_candidate_id')
+    .eq('run_id', runId);
 
   if (runErr || !run || !run.jd_parsed) {
     return NextResponse.json({ error: 'run or jd_parsed missing' }, { status: 400 });
@@ -278,7 +314,10 @@ export async function POST(
   }
 
   const excludedIds = new Set((existing ?? []).map((candidate) => candidate.pool_candidate_id as string));
-  const { pool, hidden } = loadPool();
+  const { pool, hidden } = await loadRunTalentPool(
+    supabase,
+    (run.talent_database_id as string | null) ?? null
+  );
   const remainingPool = pool.filter((profile) => !excludedIds.has(profile.id));
 
   if (remainingPool.length === 0) {

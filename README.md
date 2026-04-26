@@ -16,9 +16,10 @@ Plumb is a working prototype for the Deccan AI Catalyst problem statement: an AI
 3. **Explains Match Score** with requirement-level citations from each candidate profile.
 4. **Simulates outreach** through a 4-turn recruiter/candidate conversation using hidden persona state.
 5. **Supports live recruiter follow-ups** in the candidate drill-down: the recruiter can type a new message, the candidate persona replies, and Plumb re-scores the expanded transcript.
-6. **Lets recruiters mark decisions** on each candidate and top up the shortlist with unseen candidates when more options are needed.
-7. **Scores Interest** with cited transcript spans, then ranks candidates into Recommended, Stretch, Nurture, and Pass cohorts.
-8. **Drafts next actions** the recruiter can use immediately.
+6. **Supports real talent database upload** via JSON/CSV and lets recruiters choose which database to use for each JD.
+7. **Lets recruiters mark decisions** on each candidate and top up the shortlist with unseen candidates when more options are needed.
+8. **Scores Interest** with cited transcript spans, then ranks candidates into Recommended, Stretch, Nurture, and Pass cohorts.
+9. **Drafts next actions** the recruiter can use immediately.
 
 For the hackathon prototype, candidate discovery runs over `data/pool.json`. In production, the same `CandidateProfile` schema can be populated from ATS exports, LinkedIn/project profiles, GitHub search, referrals, marketplace databases, or CV parsing.
 
@@ -89,6 +90,7 @@ flowchart TD
 | Stage | Endpoint | Output |
 |---|---|---|
 | Create run | `POST /api/runs` | Run row |
+| Upload/select database | `GET/POST /api/talent-databases` | Seeded corpus + uploaded candidate databases |
 | Parse JD | `POST /api/runs/{id}/parse` | Structured JD |
 | Discover + match | `POST /api/runs/{id}/rerank` | Top 8 candidates with Match Score and evidence |
 | Engage | `POST /api/runs/{id}/candidates/{cid}/simulate` | 8-turn transcript |
@@ -165,6 +167,7 @@ This is the central product behavior: Plumb does not simply rank the best resume
 ## Design Decisions
 
 - **Candidate discovery over a seeded corpus** — proves the full scouting workflow without depending on brittle live scraping or PDF parsing during a timed demo.
+- **Real database upload path** — recruiters can upload a JSON/CSV candidate database and choose it for a specific run. Plumb normalizes flat CSV rows into the internal candidate schema, while native JSON preserves richer profile evidence.
 - **Full-corpus re-rank via Kimi K2.6 instead of embeddings** — 256K context fits the profile corpus. Full reasoning helps surface non-obvious fits.
 - **Client-orchestrated pipeline** — free-tier constraint turned into a feature: each stage is idempotent, retryable, and observable.
 - **Cohort-based ranking instead of weighted sum** — recruiters think in cohorts, not rankings. "Who should I talk to?" > "Who's #1?"

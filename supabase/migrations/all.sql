@@ -1,6 +1,6 @@
 -- ============================================================
 -- Plumb — combined migration (paste into Supabase SQL Editor)
--- Running 001 + 002 + 003 + 004 in order. Idempotent — safe to re-run.
+-- Running 001 + 002 + 003 + 004 + 005 in order. Idempotent — safe to re-run.
 -- ============================================================
 
 create extension if not exists "uuid-ossp";
@@ -168,3 +168,48 @@ begin
     alter publication supabase_realtime add table conversations;
   end if;
 end $$;
+
+-- ============ 005 talent databases ============
+
+create table if not exists talent_databases (
+  id uuid primary key default uuid_generate_v4(),
+  name text not null,
+  source_type text not null default 'upload'
+    check (source_type in ('seeded','upload','ats','csv','json')),
+  candidate_count int not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists talent_database_candidates (
+  id uuid primary key default uuid_generate_v4(),
+  database_id uuid not null references talent_databases(id) on delete cascade,
+  pool_candidate_id text not null,
+  profile_json jsonb not null,
+  persona_hidden_state jsonb,
+  created_at timestamptz not null default now()
+);
+
+alter table runs
+  add column if not exists talent_database_id uuid references talent_databases(id) on delete set null;
+
+create unique index if not exists idx_talent_database_candidates_unique
+  on talent_database_candidates(database_id, pool_candidate_id);
+
+create index if not exists idx_talent_database_candidates_database_id
+  on talent_database_candidates(database_id);
+
+create index if not exists idx_runs_talent_database_id
+  on runs(talent_database_id);
+
+drop trigger if exists talent_databases_updated on talent_databases;
+create trigger talent_databases_updated before update on talent_databases for each row execute function set_updated_at();
+
+alter table talent_databases enable row level security;
+alter table talent_database_candidates enable row level security;
+
+drop policy if exists "public read talent databases" on talent_databases;
+create policy "public read talent databases" on talent_databases for select using (true);
+
+grant select on talent_databases to anon;
+grant select on talent_databases to authenticated;

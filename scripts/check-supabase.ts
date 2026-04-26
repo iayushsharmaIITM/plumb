@@ -10,7 +10,15 @@ const supabase = createClient(url, key, { auth: { persistSession: false } });
 
 async function main() {
   console.log(`Checking ${url}\n`);
-  const tables = ['runs', 'candidates', 'conversations', 'api_calls', 'rate_limits'] as const;
+  const tables = [
+    'runs',
+    'candidates',
+    'conversations',
+    'api_calls',
+    'rate_limits',
+    'talent_databases',
+    'talent_database_candidates',
+  ] as const;
   const views = ['candidates_public'] as const;
   let ok = true;
 
@@ -45,6 +53,17 @@ async function main() {
     ok = false;
   } else {
     console.log('✓ candidate review columns — reachable');
+  }
+
+  const { error: databaseColumnError } = await supabase
+    .from('runs')
+    .select('talent_database_id')
+    .limit(1);
+  if (databaseColumnError) {
+    console.log(`✗ run talent database column — ${databaseColumnError.message}`);
+    ok = false;
+  } else {
+    console.log('✓ run talent database column — reachable');
   }
 
   // Realtime publication
