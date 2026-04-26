@@ -6,8 +6,8 @@ Plumb is a working prototype for the Deccan AI Catalyst problem statement: an AI
 
 ## See it in action
 
-- **Featured run:** [`/runs/demo`](https://plumb-demo.vercel.app/runs/demo) — pre-computed, loads instantly
-- **Live app:** [plumb-demo.vercel.app](https://plumb-demo.vercel.app)
+- **Featured run:** [`/runs/demo`](https://plumb-three.vercel.app/runs/demo) — pre-computed, loads instantly
+- **Live app:** [plumb-three.vercel.app](https://plumb-three.vercel.app)
 
 ## What the Agent Does
 
