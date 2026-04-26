@@ -1,0 +1,2599 @@
+{
+  "exported_at": "2026-04-24T23:27:09.235Z",
+  "source": "supabase_export",
+  "run": {
+    "id": "demo",
+    "source_run_id": "72b5e00c-628f-4126-9f5c-a5971510b24d",
+    "jd_text": "# Agentic AI Engineer — Deccan AI\n\n**Location:** Remote-first, team hubs in Bengaluru + SF.\n**Level:** Senior individual contributor (staff-level trajectory).\n**Team:** Joining a 6-person team building production agent systems for marketplaces and expert networks.\n\n## The role\n\nWe're building agent infrastructure that matches expert talent to high-stakes work — interest modeling, simulated outreach, evidence-cited scoring. You'll own end-to-end systems: from prompt architecture and model routing to eval harnesses and the production agents themselves.\n\nConcretely you will:\n\n- Design and ship multi-agent pipelines (planner / reactor / verifier patterns) against frontier LLMs\n- Build evaluation harnesses that catch regressions before they ship\n- Run inference-optimization work: model selection per stage, context engineering, cost/latency tradeoffs\n- Partner with product on rubric design and calibration\n- Ship under real constraints (latency budgets, public deploys, observable systems)\n\n## Must-haves\n\n- 5+ years of software engineering with at least 2 years shipping production ML/AI systems\n- Demonstrated work with modern LLM tooling: agent frameworks, eval harnesses, RAG pipelines, or tool-use patterns\n- Production ownership of a non-trivial system from prompt design through deploy (portfolio, OSS, or prior role)\n- Comfort with ambiguity — this role is heavier on judgment than on executing a spec\n\n## Nice-to-haves\n\n- Published writing on agent systems, evals, or prompt engineering\n- Background with distributed systems at scale\n- Experience with structured-output generation (JSON mode, grammars, constrained decoding)\n- Familiarity with Vercel / Next.js / TypeScript for the product surfaces\n- OSS contributions to agent frameworks (LangGraph, LlamaIndex, CrewAI, Pydantic AI, etc.)\n\n## What 6 months in looks like\n\n- You've shipped at least one production agent pipeline that we evaluate and trust\n- You've raised the floor on our eval harness — we catch regressions we previously missed\n- You're routinely the person who answers *\"why is this model the right choice for this stage?\"* — with data\n\n## What this role is not\n\n- Not a research role — we ship\n- Not a people-management role\n- Not a prototype factory — we care about production reliability, cost, and latency\n\n---\n\nPlumb (the recruiting intelligence product you're reading this on) is the first product our team shipped. This role is to build the next one.\n",
+    "jd_parsed": {
+      "archetype": "agentic AI engineer building production multi-agent systems",
+      "red_flags": [
+        "Candidates primarily focused on research rather than shipping production systems",
+        "Candidates seeking people-management responsibilities",
+        "Candidates without production LLM/AI deployment experience",
+        "Candidates uncomfortable operating without clear specifications"
+      ],
+      "seniority": "senior",
+      "must_haves": [
+        {
+          "id": "req_1",
+          "category": "experience",
+          "description": "5+ years of software engineering experience with at least 2 years shipping production ML/AI systems"
+        },
+        {
+          "id": "req_2",
+          "category": "technical",
+          "description": "Demonstrated work with modern LLM tooling including agent frameworks, eval harnesses, RAG pipelines, or tool-use patterns"
+        },
+        {
+          "id": "req_3",
+          "category": "experience",
+          "description": "Production ownership of a non-trivial AI system from prompt design through deployment (via portfolio, OSS, or prior role)"
+        },
+        {
+          "id": "req_4",
+          "category": "technical",
+          "description": "Experience designing and shipping multi-agent pipelines (planner/reactor/verifier patterns) against frontier LLMs"
+        },
+        {
+          "id": "req_5",
+          "category": "technical",
+          "description": "Experience building evaluation harnesses for LLM/agent systems"
+        }
+      ],
+      "role_title": "Agentic AI Engineer",
+      "nice_to_haves": [
+        {
+          "id": "nth_1",
+          "category": "experience",
+          "description": "Published writing on agent systems, evals, or prompt engineering"
+        },
+        {
+          "id": "nth_2",
+          "category": "technical",
+          "description": "Background with distributed systems at scale"
+        },
+        {
+          "id": "nth_3",
+          "category": "technical",
+          "description": "Experience with structured-output generation (JSON mode, grammars, constrained decoding)"
+        },
+        {
+          "id": "nth_4",
+          "category": "technical",
+          "description": "Familiarity with Vercel / Next.js / TypeScript"
+        },
+        {
+          "id": "nth_5",
+          "category": "experience",
+          "description": "OSS contributions to agent frameworks (LangGraph, LlamaIndex, CrewAI, Pydantic AI, etc.)"
+        }
+      ],
+      "implicit_signals": [
+        "Strong preference for candidates who can demonstrate concrete shipped agent work via public portfolio or OSS",
+        "Role requires high judgment and autonomy in ambiguous environments (startup-style ownership)",
+        "Heavy emphasis on production reliability, cost, and latency over research or prototyping",
+        "Remote-first with expectation of overlap with Bengaluru + SF hubs",
+        "Staff-level trajectory implies potential for technical leadership without people management"
+      ],
+      "success_criteria": [
+        "Shipped at least one production agent pipeline that the team evaluates and trusts",
+        "Significantly improved the eval harness so that regressions are caught before shipping",
+        "Routinely able to justify model and architecture choices for specific pipeline stages with data"
+      ]
+    },
+    "status": "complete"
+  },
+  "candidates": [
+    {
+      "id": "0d5ab93e-dbc5-4014-8b34-0ff77a5fd9f4",
+      "run_id": "demo",
+      "pool_candidate_id": "hero_2_off_paper_eager",
+      "profile_json": {
+        "id": "hero_2_off_paper_eager",
+        "name": "Jules Nakamura",
+        "location": "San Francisco, CA, USA",
+        "education": [
+          {
+            "year": 2021,
+            "degree": "B.S. Computer Science",
+            "institution": "University of California, San Diego"
+          }
+        ],
+        "work_history": [
+          {
+            "role": "Founding Engineer",
+            "years": 3,
+            "company": "Trellis (YC W23)",
+            "end_year": null,
+            "highlights": [
+              "Built a RAG document-search pipeline from scratch serving 10M+ docs with sub-200ms p99 latency",
+              "Owned end-to-end ML infra including fine-tuning embedding models, eval frameworks, and customer-facing React dashboards"
+            ],
+            "start_year": 2023
+          },
+          {
+            "role": "Software Engineer",
+            "years": 2,
+            "company": "Segment",
+            "end_year": 2023,
+            "highlights": [
+              "Led migration of the notification delivery service from Node.js to Rust, cutting latency by 40%",
+              "Built internal A/B testing tooling used by 30+ product teams"
+            ],
+            "start_year": 2021
+          }
+        ],
+        "current_title": "Founding Engineer",
+        "recent_signals": [
+          {
+            "date": "2026-01-15",
+            "type": "blog_post",
+            "content": "Published 'Moving Beyond Vibe Coding' arguing for structured agent architectures and deterministic evals in production systems"
+          },
+          {
+            "date": "2026-02-20",
+            "type": "github_activity",
+            "content": "Merged PR adding Model Context Protocol (MCP) support to repo-sherpa, enabling IDE integration"
+          },
+          {
+            "date": "2026-03-01",
+            "type": "tweet",
+            "content": "Three years of building at a startup taught me that velocity without direction is just exhaustion. Ready to join a team with real infrastructure and a north star."
+          }
+        ],
+        "current_company": "Trellis (YC W23)",
+        "skills_declared": [
+          "Python",
+          "TypeScript",
+          "React",
+          "PyTorch",
+          "AWS (ECS/Lambda)",
+          "PostgreSQL",
+          "Redis",
+          "Vector Search (Weaviate)",
+          "LLM Prompt Engineering",
+          "CI/CD (GitHub Actions)",
+          "Distributed Systems"
+        ],
+        "writing_samples": [
+          {
+            "url": "https://julesn.dev/posts/orchestration",
+            "title": "Why We Ditched Our Orchestration Layer",
+            "excerpt": "After six months fighting abstraction leaks in off-the-shelf LLM frameworks, we rewrote our agent loop in 400 lines of Python. Latency dropped 60% and we could finally reason about token flow."
+          },
+          {
+            "url": "https://julesn.dev/posts/evals-as-ui",
+            "title": "Evals Are User Interfaces",
+            "excerpt": "Treating evaluation as a batch script is why teams ship broken retrieval. We built a live playground where product managers could grade answers, turning evals into a collaborative interface."
+          }
+        ],
+        "years_experience": 5,
+        "stated_preferences": {
+          "domains": [
+            "AI infrastructure",
+            "developer tools",
+            "enterprise search"
+          ],
+          "comp_range": "$190k - $250k total comp",
+          "remote_preference": "Hybrid in San Francisco; open to NYC"
+        },
+        "skills_demonstrated": [
+          {
+            "skill": "Python",
+            "evidence_refs": [
+              "Built a RAG document-search pipeline from scratch serving 10M+ docs with sub-200ms p99 latency"
+            ]
+          },
+          {
+            "skill": "TypeScript / React",
+            "evidence_refs": [
+              "Owned end-to-end ML infra including fine-tuning embedding models, eval frameworks, and customer-facing React dashboards"
+            ]
+          },
+          {
+            "skill": "PyTorch",
+            "evidence_refs": [
+              "Built a RAG document-search pipeline from scratch serving 10M+ docs with sub-200ms p99 latency"
+            ]
+          },
+          {
+            "skill": "LLM Tooling",
+            "evidence_refs": [
+              "Blog post: Why We Ditched Our Orchestration Layer",
+              "Blog post: Evals Are User Interfaces"
+            ]
+          },
+          {
+            "skill": "AWS",
+            "evidence_refs": [
+              "Owned end-to-end ML infra including fine-tuning embedding models, eval frameworks, and customer-facing React dashboards"
+            ]
+          }
+        ],
+        "open_source_contributions": [
+          {
+            "repo": "github.com/julesn/repo-sherpa",
+            "stars": 1240,
+            "description": "CLI that uses local LLMs to explain and navigate large codebases via semantic search and MCP"
+          }
+        ]
+      },
+      "match_score": 76,
+      "match_evidence": {
+        "red_flags": [],
+        "depth_score": 20,
+        "requirements": [
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built a RAG document-search pipeline from scratch serving 10M+ docs with sub-200ms p99 latency",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_1",
+            "requirement_description": "5+ years of software engineering experience with at least 2 years shipping production ML/AI systems"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built a RAG document-search pipeline from scratch serving 10M+ docs with sub-200ms p99 latency",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_2",
+            "requirement_description": "Demonstrated work with modern LLM tooling including agent frameworks, eval harnesses, RAG pipelines, or tool-use patterns"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built a RAG document-search pipeline from scratch serving 10M+ docs with sub-200ms p99 latency",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_3",
+            "requirement_description": "Production ownership of a non-trivial AI system from prompt design through deployment (via portfolio, OSS, or prior role)"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built a RAG document-search pipeline from scratch serving 10M+ docs with sub-200ms p99 latency",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_4",
+            "requirement_description": "Experience designing and shipping multi-agent pipelines (planner/reactor/verifier patterns) against frontier LLMs"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built a RAG document-search pipeline from scratch serving 10M+ docs with sub-200ms p99 latency",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_5",
+            "requirement_description": "Experience building evaluation harnesses for LLM/agent systems"
+          }
+        ],
+        "trajectory_score": 20,
+        "overall_reasoning": "Selected by local fallback after the model rerank timed out. Review the evidence carefully before treating the match score as final."
+      },
+      "interest_score": 91,
+      "interest_evidence": {
+        "signals": [
+          {
+            "name": "specificity_of_engagement",
+            "score": 18,
+            "evidence": [
+              {
+                "span": "What does ownership look like in the first 90 days?",
+                "turn": 2,
+                "reasoning": "The candidate engages with the specifics of the role by inquiring about ownership in the first 90 days, showing interest in the practical responsibilities."
+              },
+              {
+                "span": "I want to work closer to the agent loop and ship durable systems, not demos.",
+                "turn": 4,
+                "reasoning": "Candidate specifies desire to work on agent loop and durable systems rather than demos, directly relating to the production multi-agent systems in the role."
+              }
+            ]
+          },
+          {
+            "name": "forward_commitment",
+            "score": 19,
+            "evidence": [
+              {
+                "span": "I can make time this week. Send over a few times and I will prioritize it.",
+                "turn": 8,
+                "reasoning": "By offering to meet this week and prioritizing the times, the candidate signals clear movement toward the next step in the process."
+              }
+            ]
+          },
+          {
+            "name": "objection_handling",
+            "score": 16,
+            "evidence": [
+              {
+                "span": "My main question is how stable the roadmap is. If the team has focus, I would be excited to go deep.",
+                "turn": 6,
+                "reasoning": "Candidate surfaces a potential objection regarding roadmap stability and makes excitement conditional on the team having focus, indicating thoughtful consideration."
+              }
+            ]
+          },
+          {
+            "name": "availability_timing",
+            "score": 20,
+            "evidence": [
+              {
+                "span": "I am actively interviewing and want a team that treats evals as real engineering.",
+                "turn": 2,
+                "reasoning": "States being actively interviewing, showing readiness to move quickly."
+              },
+              {
+                "span": "I can make time this week. Send over a few times and I will prioritize it.",
+                "turn": 8,
+                "reasoning": "Explicitly available this week and will prioritize, indicating short timeline for next steps."
+              }
+            ]
+          },
+          {
+            "name": "motivation_alignment",
+            "score": 18,
+            "evidence": [
+              {
+                "span": "This is very close to what I want next. I want to work closer to the agent loop and ship durable systems, not demos.",
+                "turn": 4,
+                "reasoning": "Directly affirms the role is close to what they want and echoes the desire for production agent work over demos, aligning with the position's emphasis on shipping durable systems."
+              }
+            ]
+          }
+        ],
+        "risk_flags": [
+          "Raised questions about roadmap stability which could indicate hesitation if not addressed",
+          "Actively interviewing with other teams, potential for competing offers"
+        ],
+        "overall_reasoning": "The candidate shows high genuine interest through specific questions tailored to the role's challenges, positive affirmations of fit, and immediate availability for further discussions. They are actively in the market and seeking exactly the kind of production AI engineering work described. While they have a question about roadmap stability, they are still eager to proceed with a technical intro. This suggests the candidate is seriously considering the opportunity and is a strong potential fit."
+      },
+      "cohort": "recommended",
+      "next_action_draft": "Hi Jules, thanks for the thoughtful conversation. I especially appreciated you sharing that you want to work closer to the agent loop and ship durable systems rather than demos, and your question about what ownership looks like in the first 90 days. Those both showed how aligned this role feels with what you're looking for next. \n\nI'd like to get you on a 30-minute call with our hiring manager to dive into the roadmap stability and how we treat evals as real engineering. Would Tuesday at 11am PT or Thursday at 2pm PT work for you? Let me know what fits and I'll send the calendar invite right away.",
+      "rank_within_cohort": 1,
+      "status": "complete",
+      "created_at": "2026-04-24T23:25:35.474771+00:00",
+      "updated_at": "2026-04-24T23:27:08.212994+00:00"
+    },
+    {
+      "id": "a72d4cc9-31d8-4d4a-a957-4aa05418ee1f",
+      "run_id": "demo",
+      "pool_candidate_id": "hero_5_stretch_eager",
+      "profile_json": {
+        "id": "hero_5_stretch_eager",
+        "name": "Jin Park",
+        "location": "Seattle, WA, USA",
+        "education": [
+          {
+            "year": 2020,
+            "degree": "B.S. Computer Science",
+            "institution": "University of Washington"
+          }
+        ],
+        "work_history": [
+          {
+            "role": "Software Engineer, Frontend",
+            "years": 2,
+            "company": "Gatsby",
+            "end_year": 2022,
+            "highlights": [
+              "Shipped redesigned GraphiQL explorer UI used by 30k+ developers weekly",
+              "Reduced docs site bundle size by 40% through aggressive code-splitting and lazy loading"
+            ],
+            "start_year": 2020
+          },
+          {
+            "role": "Frontend Engineer",
+            "years": 2,
+            "company": "Northstar Analytics",
+            "end_year": 2024,
+            "highlights": [
+              "Led migration from Create React App to Next.js App Router for core analytics dashboard",
+              "Built real-time data visualization components used by 50+ enterprise clients"
+            ],
+            "start_year": 2022
+          },
+          {
+            "role": "Senior Frontend Engineer",
+            "years": 2,
+            "company": "Prism Labs",
+            "end_year": null,
+            "highlights": [
+              "Architected internal Claude code-review agent later open-sourced to 1,400 GitHub stars",
+              "Redesigned core workspace UI improving new-team activation metric by 22%"
+            ],
+            "start_year": 2024
+          }
+        ],
+        "current_title": "Senior Frontend Engineer",
+        "recent_signals": [
+          {
+            "date": "2026-02-10",
+            "type": "github_activity",
+            "content": "Pushed 12 commits to prismlabs/claude-courier: added support for multi-file edit sessions and Anthropic tool-use API"
+          },
+          {
+            "date": "2026-01-15",
+            "type": "tweet",
+            "content": "After 6 months of dogfooding, we open-sourced our internal Claude tool. 1k+ stars in a week. Frontend engineers should be building AI interfaces, not just consuming them."
+          },
+          {
+            "date": "2025-12-03",
+            "type": "blog_post",
+            "content": "Published 'Why I Stopped Waiting for the Backend Team to Build AI Features'"
+          }
+        ],
+        "current_company": "Prism Labs",
+        "skills_declared": [
+          "React",
+          "TypeScript",
+          "Next.js",
+          "Tailwind CSS",
+          "Node.js",
+          "LLM API Integration",
+          "Prompt Engineering",
+          "Web Performance",
+          "Python"
+        ],
+        "writing_samples": [
+          {
+            "url": "https://jinpark.dev/posts/claude-courier",
+            "title": "From React to Agents: Shipping a Claude-Powered Code Reviewer",
+            "excerpt": "We started with a simple Chrome extension for our own team. Six months later, it had replaced our manual PR review checklist and accumulated 1,400 GitHub stars. Here's what I learned about designing interfaces for uncertainty."
+          }
+        ],
+        "years_experience": 5,
+        "stated_preferences": {
+          "domains": [
+            "AI infrastructure",
+            "Developer tools",
+            "Human-computer interaction"
+          ],
+          "comp_range": "$180k - $240k",
+          "remote_preference": "Remote-first, with quarterly offsites"
+        },
+        "skills_demonstrated": [
+          {
+            "skill": "React",
+            "evidence_refs": [
+              "Shipped redesigned GraphiQL explorer UI at Gatsby",
+              "Redesigned core workspace UI improving activation metric at Prism Labs"
+            ]
+          },
+          {
+            "skill": "TypeScript",
+            "evidence_refs": [
+              "Led migration from Create React App to Next.js App Router at Northstar Analytics",
+              "Architected internal Claude code-review agent at Prism Labs"
+            ]
+          },
+          {
+            "skill": "Next.js",
+            "evidence_refs": [
+              "Led migration from Create React App to Next.js App Router at Northstar Analytics"
+            ]
+          },
+          {
+            "skill": "LLM Integration",
+            "evidence_refs": [
+              "Architected internal Claude code-review agent later open-sourced to 1,400 GitHub stars at Prism Labs"
+            ]
+          },
+          {
+            "skill": "UX Engineering",
+            "evidence_refs": [
+              "Built real-time data visualization components at Northstar Analytics",
+              "Redesigned core workspace UI improving new-team activation metric by 22% at Prism Labs"
+            ]
+          }
+        ],
+        "open_source_contributions": [
+          {
+            "repo": "prismlabs/claude-courier",
+            "stars": 1400,
+            "description": "Browser-native devtools panel for Claude-powered code review and inline edits"
+          }
+        ]
+      },
+      "match_score": 64,
+      "match_evidence": {
+        "red_flags": [],
+        "depth_score": 19,
+        "requirements": [
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Shipped redesigned GraphiQL explorer UI used by 30k+ developers weekly",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_1",
+            "requirement_description": "5+ years of software engineering experience with at least 2 years shipping production ML/AI systems"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Shipped redesigned GraphiQL explorer UI used by 30k+ developers weekly",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_2",
+            "requirement_description": "Demonstrated work with modern LLM tooling including agent frameworks, eval harnesses, RAG pipelines, or tool-use patterns"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Shipped redesigned GraphiQL explorer UI used by 30k+ developers weekly",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_3",
+            "requirement_description": "Production ownership of a non-trivial AI system from prompt design through deployment (via portfolio, OSS, or prior role)"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Shipped redesigned GraphiQL explorer UI used by 30k+ developers weekly",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_4",
+            "requirement_description": "Experience designing and shipping multi-agent pipelines (planner/reactor/verifier patterns) against frontier LLMs"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Shipped redesigned GraphiQL explorer UI used by 30k+ developers weekly",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_5",
+            "requirement_description": "Experience building evaluation harnesses for LLM/agent systems"
+          }
+        ],
+        "trajectory_score": 17,
+        "overall_reasoning": "Selected by local fallback after the model rerank timed out. Review the evidence carefully before treating the match score as final."
+      },
+      "interest_score": 90,
+      "interest_evidence": {
+        "signals": [
+          {
+            "name": "specificity_of_engagement",
+            "score": 18,
+            "evidence": [
+              {
+                "span": "What does ownership look like in the first 90 days? I am actively interviewing and want a team that treats evals as real engineering.",
+                "turn": 2,
+                "reasoning": "Candidate asks targeted question about ownership timeline and specifies preference for evals treated as real engineering, engaging directly with role responsibilities."
+              },
+              {
+                "span": "I want to work closer to the agent loop and ship durable systems, not demos.",
+                "turn": 4,
+                "reasoning": "This demonstrates specific interest in the agent loop and production durability rather than generic interest."
+              }
+            ]
+          },
+          {
+            "name": "forward_commitment",
+            "score": 19,
+            "evidence": [
+              {
+                "span": "I can make time this week. Send over a few times and I will prioritize it.",
+                "turn": 8,
+                "reasoning": "Candidate commits to concrete action by offering availability this week and agreeing to prioritize the technical intro."
+              }
+            ]
+          },
+          {
+            "name": "objection_handling",
+            "score": 15,
+            "evidence": [
+              {
+                "span": "My main question is how stable the roadmap is. If the team has focus, I would be excited to go deep.",
+                "turn": 6,
+                "reasoning": "Candidate surfaces a specific concern about roadmap stability and conditions excitement on team focus, engaging without dismissing."
+              }
+            ]
+          },
+          {
+            "name": "availability_timing",
+            "score": 20,
+            "evidence": [
+              {
+                "span": "I am actively interviewing",
+                "turn": 2,
+                "reasoning": "Explicit statement of active interviewing signals short timeline and high readiness to move."
+              },
+              {
+                "span": "I can make time this week. Send over a few times and I will prioritize it.",
+                "turn": 8,
+                "reasoning": "Offers immediate availability this week and prioritization, indicating no delays."
+              }
+            ]
+          },
+          {
+            "name": "motivation_alignment",
+            "score": 18,
+            "evidence": [
+              {
+                "span": "This is very close to what I want next. I want to work closer to the agent loop and ship durable systems, not demos.",
+                "turn": 4,
+                "reasoning": "Candidate states the role closely matches desired next step focused on agent loops and durable production systems."
+              }
+            ]
+          }
+        ],
+        "risk_flags": [
+          "Frontend background at Prism Labs may lack the required 2+ years production ML/AI systems experience",
+          "Conditional interest based on roadmap stability and team focus"
+        ],
+        "overall_reasoning": "The candidate displays high genuine interest by asking specific questions about ownership, evals, agent loops, and roadmap while repeatedly affirming alignment with production-focused work. He is actively interviewing and immediately available this week, showing clear forward momentum toward next steps. Concerns are surfaced constructively rather than as blockers. Overall this is a strong interest level with good motivation fit for the agentic AI role."
+      },
+      "cohort": "stretch",
+      "next_action_draft": "Hi Jin, thanks again for the thoughtful conversation. While your experience at Prism Labs has strong overlap with production AI systems, the role does require 2+ years of hands-on production ML/AI systems experience which is a bit of a stretch from your background. That said, we're still very interested because of how closely your questions about ownership, eval rigor, agent loops, and roadmap stability align with the kind of engineer we need. Your clear motivation to ship durable systems rather than demos makes you a great potential fit despite the gap. Would you be open to a short 20-minute informal chat with the hiring manager next week so we can explore those topics and give you a clearer picture of the team?",
+      "rank_within_cohort": 1,
+      "status": "complete",
+      "created_at": "2026-04-24T23:25:35.474771+00:00",
+      "updated_at": "2026-04-24T23:27:08.212744+00:00"
+    },
+    {
+      "id": "2b1f76cf-7493-419c-8a83-bd9762f0dced",
+      "run_id": "demo",
+      "pool_candidate_id": "hero_1_perfect_disengaged",
+      "profile_json": {
+        "id": "hero_1_perfect_disengaged",
+        "name": "Maya Chen",
+        "location": "San Francisco, CA, USA",
+        "education": [
+          {
+            "year": 2016,
+            "degree": "MS in Computer Science (Machine Learning)",
+            "institution": "Stanford University"
+          },
+          {
+            "year": 2014,
+            "degree": "BS in Mathematics & Computer Science",
+            "institution": "Massachusetts Institute of Technology"
+          }
+        ],
+        "work_history": [
+          {
+            "role": "Senior Staff Machine Learning Engineer, Agent Systems",
+            "years": 2,
+            "company": "Anthropic",
+            "end_year": null,
+            "highlights": [
+              "Leads production evaluation for autonomous agent systems",
+              "Shipped internal reliability harness adopted by 12 research teams"
+            ],
+            "start_year": 2024
+          },
+          {
+            "role": "Staff Machine Learning Engineer",
+            "years": 3,
+            "company": "OpenAI",
+            "end_year": 2024,
+            "highlights": [
+              "Built multi-turn tool-use orchestration for GPT-4o class models",
+              "Scaled RLHF post-training pipeline reducing iteration time by 40%"
+            ],
+            "start_year": 2021
+          },
+          {
+            "role": "Senior Software Engineer, Research",
+            "years": 3,
+            "company": "Google DeepMind",
+            "end_year": 2021,
+            "highlights": [
+              "Led evaluation infrastructure for Gemini tool-use capabilities",
+              "Authored internal JAX framework for large-scale RL experiments"
+            ],
+            "start_year": 2018
+          },
+          {
+            "role": "Software Engineer, Machine Learning",
+            "years": 2,
+            "company": "Meta AI",
+            "end_year": 2018,
+            "highlights": [
+              "Production ranking models for Instagram Explore",
+              "Migrated training stack to PyTorch distributed across 512 GPU clusters"
+            ],
+            "start_year": 2016
+          }
+        ],
+        "current_title": "Senior Staff Machine Learning Engineer, Agent Systems",
+        "recent_signals": [
+          {
+            "date": "2026-05-14",
+            "type": "tweet",
+            "content": "Spent the week debugging a subtle reward hacking pattern in our latest agent eval suite. Static correctness metrics are not enough."
+          },
+          {
+            "date": "2026-04-03",
+            "type": "blog_post",
+            "content": "Published 'Measuring Tool Use Reliability in Production Agents' on longitudinal agent failure modes."
+          },
+          {
+            "date": "2026-06-01",
+            "type": "github_activity",
+            "content": "Pushed 12 commits to agent-eval-harness adding multi-turn rollback support and async eval runners."
+          },
+          {
+            "date": "2026-05-12",
+            "type": "conference_talk",
+            "content": "ICML 2026 Workshop on Agentic AI — 'Evaluating Agents Beyond the Final Answer'"
+          }
+        ],
+        "current_company": "Anthropic",
+        "skills_declared": [
+          "LLM Post-Training & RLHF",
+          "Agent Evaluation Infrastructure",
+          "Distributed Systems for Training",
+          "JAX / Flax",
+          "PyTorch",
+          "Python & C++",
+          "CUDA Optimization",
+          "Statistical Experimental Design",
+          "MLOps"
+        ],
+        "writing_samples": [
+          {
+            "url": "https://mayachen.dev/posts/tool-use-reliability",
+            "title": "Measuring Tool Use Reliability in Production Agents",
+            "excerpt": "We instrumented 10M agent trajectories to show that static benchmarks overestimate real-world tool-use accuracy by 12-18% when context windows exceed 32k tokens."
+          },
+          {
+            "url": "https://mayachen.dev/posts/benchmark-optimization",
+            "title": "Why I Stopped Optimizing for Benchmarks",
+            "excerpt": "Overfitting to SWE-bench and HumanEval correlates with degraded user satisfaction scores in open-ended coding agents."
+          }
+        ],
+        "years_experience": 9,
+        "stated_preferences": {
+          "domains": [
+            "Frontier AI Research",
+            "Agent Infrastructure",
+            "AI Safety & Evaluation"
+          ],
+          "comp_range": "$900k–$1.3M all-in",
+          "remote_preference": "Hybrid, Bay Area preferred"
+        },
+        "skills_demonstrated": [
+          {
+            "skill": "Production Agent Systems",
+            "evidence_refs": [
+              "Built multi-turn tool-use orchestration for GPT-4o class models",
+              "Leads production evaluation for autonomous agent systems"
+            ]
+          },
+          {
+            "skill": "Reinforcement Learning",
+            "evidence_refs": [
+              "Scaled RLHF post-training pipeline reducing iteration time by 40%",
+              "Authored internal JAX framework for large-scale RL experiments"
+            ]
+          },
+          {
+            "skill": "Large-Scale Distributed Training",
+            "evidence_refs": [
+              "Migrated training stack to PyTorch distributed across 512 GPU clusters",
+              "Led evaluation infrastructure for Gemini tool-use capabilities"
+            ]
+          }
+        ],
+        "open_source_contributions": [
+          {
+            "repo": "mayachen/agent-eval-harness",
+            "stars": 3400,
+            "description": "Lightweight harness for longitudinal agent evaluation with automatic regression detection"
+          },
+          {
+            "repo": "vllm-project/vllm",
+            "stars": 38000,
+            "description": "Contributed prefix-aware scheduling for speculative decoding"
+          }
+        ]
+      },
+      "match_score": 94,
+      "match_evidence": {
+        "red_flags": [],
+        "depth_score": 20,
+        "requirements": [
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Leads production evaluation for autonomous agent systems",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_1",
+            "requirement_description": "5+ years of software engineering experience with at least 2 years shipping production ML/AI systems"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Leads production evaluation for autonomous agent systems",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_2",
+            "requirement_description": "Demonstrated work with modern LLM tooling including agent frameworks, eval harnesses, RAG pipelines, or tool-use patterns"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Leads production evaluation for autonomous agent systems",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_3",
+            "requirement_description": "Production ownership of a non-trivial AI system from prompt design through deployment (via portfolio, OSS, or prior role)"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Leads production evaluation for autonomous agent systems",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_4",
+            "requirement_description": "Experience designing and shipping multi-agent pipelines (planner/reactor/verifier patterns) against frontier LLMs"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Leads production evaluation for autonomous agent systems",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_5",
+            "requirement_description": "Experience building evaluation harnesses for LLM/agent systems"
+          }
+        ],
+        "trajectory_score": 20,
+        "overall_reasoning": "Selected by local fallback after the model rerank timed out. Review the evidence carefully before treating the match score as final."
+      },
+      "interest_score": 30,
+      "interest_evidence": {
+        "signals": [
+          {
+            "name": "specificity_of_engagement",
+            "score": 4,
+            "evidence": [
+              {
+                "span": "I am open to learning more, though I am very happy where I am right now.",
+                "turn": 2,
+                "reasoning": "This response is entirely generic and pleasant without referencing any role specifics such as agent reliability, eval loops, tool-use behavior or production workflow quality."
+              }
+            ]
+          },
+          {
+            "name": "forward_commitment",
+            "score": 7,
+            "evidence": [
+              {
+                "span": "You can send a technical summary and I will read it when I have time.",
+                "turn": 6,
+                "reasoning": "Candidate proposes only a passive next step of receiving material with no commitment to a call, timeline or further discussion."
+              },
+              {
+                "span": "Happy to keep in touch.",
+                "turn": 8,
+                "reasoning": "Offers to keep in touch but proposes no concrete action or meeting."
+              }
+            ]
+          },
+          {
+            "name": "objection_handling",
+            "score": 11,
+            "evidence": [
+              {
+                "span": "though I am very happy where I am right now.",
+                "turn": 2,
+                "reasoning": "Surfaces concern about current role satisfaction but does not explore or resolve it against the recruiter's role description."
+              },
+              {
+                "span": "I would need a very specific reason to seriously look.",
+                "turn": 4,
+                "reasoning": "Raises the need for a specific reason but does not engage with or update view based on the hands-on work details provided."
+              }
+            ]
+          },
+          {
+            "name": "availability_timing",
+            "score": 3,
+            "evidence": [
+              {
+                "span": "I probably would not be able to move quickly. You can send a technical summary and I will read it when I have time.",
+                "turn": 6,
+                "reasoning": "Explicitly signals no ability to move quickly and defers review to whenever she has time, indicating she is not actively looking."
+              }
+            ]
+          },
+          {
+            "name": "motivation_alignment",
+            "score": 5,
+            "evidence": [
+              {
+                "span": "Comp is not really a driver for me right now. I would need a very specific reason to seriously look.",
+                "turn": 4,
+                "reasoning": "States compensation is not a driver and requires an unspecified specific reason while already happy at Anthropic, showing poor alignment with the production agent role."
+              }
+            ]
+          }
+        ],
+        "risk_flags": [
+          "Candidate is very happy at current role and not actively looking",
+          "Requires very specific reason to consider move but does not articulate what it would be",
+          "Cannot move quickly and reviews materials only on own relaxed timeline",
+          "No questions asked about tech stack or problems despite role overlap"
+        ],
+        "overall_reasoning": "The candidate exhibits low genuine interest, responding politely but passively throughout. She repeatedly notes being happy at Anthropic and needing a very specific reason to consider anything else without asking questions or engaging the role's described problems. No substantive next steps are embraced beyond receiving a summary and keeping in touch. This profile fits someone not actively on the market and only mildly open to outreach."
+      },
+      "cohort": "nurture",
+      "next_action_draft": "Thanks for the thoughtful conversation, Maya. I completely understand that the timing isn't right given how happy you are at Anthropic right now. I'll keep you updated occasionally with what our team is working on in agent reliability and production AI systems. Please feel free to reach out anytime your situation changes or if something sparks your interest.",
+      "rank_within_cohort": 1,
+      "status": "complete",
+      "created_at": "2026-04-24T23:25:35.474771+00:00",
+      "updated_at": "2026-04-24T23:27:08.223911+00:00"
+    },
+    {
+      "id": "4af43dc8-3e14-41d3-be3f-6cef14a40cc9",
+      "run_id": "demo",
+      "pool_candidate_id": "strong_24",
+      "profile_json": {
+        "id": "strong_24",
+        "name": "Aisha Okonkwo",
+        "location": "New York, NY",
+        "education": [
+          {
+            "year": 2020,
+            "degree": "BS Computer Science",
+            "institution": "Massachusetts Institute of Technology"
+          }
+        ],
+        "work_history": [
+          {
+            "role": "Staff Software Engineer",
+            "years": 2,
+            "company": "Archetype AI",
+            "end_year": null,
+            "highlights": [
+              "Core contributor to open-source agent orchestration framework AgentWeave with 2k+ GitHub stars",
+              "Built deterministic tool-use routing layer in Rust handling 10k+ agent trajectories per hour",
+              "Designed eval suite for measuring multi-turn task completion accuracy in enterprise RAG agents"
+            ],
+            "start_year": 2022
+          },
+          {
+            "role": "Software Engineer",
+            "years": 2,
+            "company": "MongoDB",
+            "end_year": 2022,
+            "highlights": [
+              "Worked on Atlas search indexing infrastructure",
+              "Built internal LLM-powered documentation bot during company hackathon",
+              "Improved test coverage for distributed query planner by 25%"
+            ],
+            "start_year": 2020
+          }
+        ],
+        "current_title": "Staff Software Engineer",
+        "recent_signals": [
+          {
+            "date": "2024-04-10",
+            "type": "blog_post",
+            "content": "Published deep-dive on grammar-constrained decoding for reliable agent workflows"
+          },
+          {
+            "date": "2024-05-28",
+            "type": "github_activity",
+            "content": "Released AgentWeave v0.5 with multi-agent support and distributed tracing"
+          }
+        ],
+        "current_company": "Archetype AI",
+        "skills_declared": [
+          "Python",
+          "TypeScript",
+          "Rust",
+          "React",
+          "LLM Orchestration",
+          "Tool Use",
+          "Evals",
+          "Kubernetes",
+          "Structured Generation"
+        ],
+        "writing_samples": [
+          {
+            "url": "https://archetype.ai/blog/structured-generation",
+            "title": "Why Agents Need Structured Generation, Not Just Prompts",
+            "excerpt": "JSON mode is a start, but deterministic state transitions require grammar-constrained decoding at the inference engine level."
+          }
+        ],
+        "years_experience": 4,
+        "stated_preferences": {
+          "domains": [
+            "enterprise AI",
+            "developer tools",
+            "healthcare"
+          ],
+          "comp_range": "$250k-$320k",
+          "remote_preference": "NYC preferred, remote okay"
+        },
+        "skills_demonstrated": [
+          {
+            "skill": "LLM Orchestration",
+            "evidence_refs": [
+              "AgentWeave framework design and release"
+            ]
+          },
+          {
+            "skill": "Rust / TypeScript",
+            "evidence_refs": [
+              "Archetype tool-use routing layer"
+            ]
+          },
+          {
+            "skill": "Evals",
+            "evidence_refs": [
+              "Archetype benchmark suite for agent trajectory correctness"
+            ]
+          }
+        ],
+        "open_source_contributions": [
+          {
+            "repo": "archetype-ai/agentweave",
+            "stars": 2100,
+            "description": "Modular agent framework with deterministic state machines and first-class tool contracts"
+          }
+        ]
+      },
+      "match_score": 74,
+      "match_evidence": {
+        "red_flags": [],
+        "depth_score": 16,
+        "requirements": [
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Core contributor to open-source agent orchestration framework AgentWeave with 2k+ GitHub stars",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_1",
+            "requirement_description": "5+ years of software engineering experience with at least 2 years shipping production ML/AI systems"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Core contributor to open-source agent orchestration framework AgentWeave with 2k+ GitHub stars",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_2",
+            "requirement_description": "Demonstrated work with modern LLM tooling including agent frameworks, eval harnesses, RAG pipelines, or tool-use patterns"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Core contributor to open-source agent orchestration framework AgentWeave with 2k+ GitHub stars",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_3",
+            "requirement_description": "Production ownership of a non-trivial AI system from prompt design through deployment (via portfolio, OSS, or prior role)"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Core contributor to open-source agent orchestration framework AgentWeave with 2k+ GitHub stars",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_4",
+            "requirement_description": "Experience designing and shipping multi-agent pipelines (planner/reactor/verifier patterns) against frontier LLMs"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Core contributor to open-source agent orchestration framework AgentWeave with 2k+ GitHub stars",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_5",
+            "requirement_description": "Experience building evaluation harnesses for LLM/agent systems"
+          }
+        ],
+        "trajectory_score": 14,
+        "overall_reasoning": "Selected by local fallback after the model rerank timed out. Review the evidence carefully before treating the match score as final."
+      },
+      "interest_score": 73,
+      "interest_evidence": {
+        "signals": [
+          {
+            "name": "specificity_of_engagement",
+            "score": 16,
+            "evidence": [
+              {
+                "span": "Are these agents internal tools or customer-facing workflows? I would want to understand the technical depth.",
+                "turn": 2,
+                "reasoning": "Candidate engages directly with role specifics by inquiring about agent types and technical depth instead of giving a generic reply."
+              },
+              {
+                "span": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me.",
+                "turn": 6,
+                "reasoning": "Candidate references concrete elements like engineering-led work and eval loops that match the role's emphasis on production reliability."
+              }
+            ]
+          },
+          {
+            "name": "forward_commitment",
+            "score": 17,
+            "evidence": [
+              {
+                "span": "I can do an intro call next week if you send a short technical brief first.",
+                "turn": 8,
+                "reasoning": "Candidate proposes a concrete next step with a specific timeline, signaling willingness to advance the process."
+              }
+            ]
+          },
+          {
+            "name": "objection_handling",
+            "score": 14,
+            "evidence": [
+              {
+                "span": "I am not desperate to leave, but doing more direct AI systems work is appealing if the team values reliability.",
+                "turn": 4,
+                "reasoning": "Candidate surfaces a concern about current satisfaction but updates view based on role's reliability focus."
+              },
+              {
+                "span": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me.",
+                "turn": 6,
+                "reasoning": "Candidate raises specific objection about prototype vs production work and ties it to what matters, showing engagement."
+              }
+            ]
+          },
+          {
+            "name": "availability_timing",
+            "score": 11,
+            "evidence": [
+              {
+                "span": "I am not desperate to leave",
+                "turn": 4,
+                "reasoning": "Explicit statement indicates candidate is not actively searching or in a rush to move."
+              },
+              {
+                "span": "I can do an intro call next week",
+                "turn": 8,
+                "reasoning": "Shows some short-term availability despite not being urgent to leave."
+              }
+            ]
+          },
+          {
+            "name": "motivation_alignment",
+            "score": 15,
+            "evidence": [
+              {
+                "span": "doing more direct AI systems work is appealing if the team values reliability.",
+                "turn": 4,
+                "reasoning": "Candidate's stated driver for direct AI systems and reliability directly matches the role's focus on agent reliability, eval loops and production ownership."
+              }
+            ]
+          }
+        ],
+        "risk_flags": [
+          "Candidate is not desperate to leave, indicating a passive search with potentially high bar",
+          "Commitment to call is conditional on receiving a technical brief first, suggesting skepticism or need for more convincing"
+        ],
+        "overall_reasoning": "The candidate shows moderate to high genuine interest by asking targeted questions about production vs prototype work, eval loops, and technical depth that align closely with the role. She is not actively looking but finds the opportunity appealing enough to schedule an intro call next week if provided a brief. This indicates thoughtful engagement rather than passive politeness, though her conditional commitment and stated lack of desperation suggest she will need strong evidence of engineering-led work to proceed further."
+      },
+      "cohort": "recommended",
+      "next_action_draft": "Hi Aisha, thanks for the thoughtful conversation. I appreciated how directly you asked about whether these agents are customer-facing and how you zeroed in on the importance of engineering-led work and eval loops. It’s clear you’re genuinely interested in roles that prioritize reliability and ownership, which aligns perfectly with what we’re building at Deccan.\n\nI’d like to move you forward with a 30-minute call with our hiring manager. He can address your questions around technical depth, failure modes, and production standards in detail.\n\nWould next Tuesday at 11am PT or Thursday at 2pm PT work for you? Let me know and I’ll send over a short technical brief ahead of the call.",
+      "rank_within_cohort": 2,
+      "status": "complete",
+      "created_at": "2026-04-24T23:25:35.474771+00:00",
+      "updated_at": "2026-04-24T23:27:08.238102+00:00"
+    },
+    {
+      "id": "a93e036e-c289-4293-a5a0-ef67927053ed",
+      "run_id": "demo",
+      "pool_candidate_id": "hero_4_wrong_direction",
+      "profile_json": {
+        "id": "hero_4_wrong_direction",
+        "name": "James Park",
+        "location": "Seattle, WA, USA",
+        "education": [
+          {
+            "year": 2016,
+            "degree": "PhD in Machine Learning",
+            "institution": "Carnegie Mellon University"
+          },
+          {
+            "year": 2011,
+            "degree": "BS in Computer Science and Mathematics",
+            "institution": "University of Washington"
+          }
+        ],
+        "work_history": [
+          {
+            "role": "Research Scientist",
+            "years": 3,
+            "company": "Microsoft Research",
+            "end_year": 2019,
+            "highlights": [
+              "Shipped production recommendation model for Xbox Live",
+              "Published 3 papers on Bayesian optimization at NeurIPS and ICML"
+            ],
+            "start_year": 2016
+          },
+          {
+            "role": "Senior ML Scientist",
+            "years": 3,
+            "company": "Meta",
+            "end_year": 2022,
+            "highlights": [
+              "Led ranking improvements for Instagram Reels saving 12% compute at iso-quality",
+              "Built internal probabilistic programming DSL adopted by 30+ teams"
+            ],
+            "start_year": 2019
+          },
+          {
+            "role": "Staff ML Scientist",
+            "years": 2,
+            "company": "Google",
+            "end_year": 2024,
+            "highlights": [
+              "Owned technical direction for next-gen search ranking feature",
+              "Mentored 4 PhD interns; 2 converted to full-time offers"
+            ],
+            "start_year": 2022
+          },
+          {
+            "role": "Principal ML Scientist",
+            "years": 2,
+            "company": "Google",
+            "end_year": null,
+            "highlights": [
+              "Drives cross-org research agenda for multimodal understanding",
+              "Tech lead for 8-person research pod; indirectly manages 2 senior ICs"
+            ],
+            "start_year": 2024
+          }
+        ],
+        "current_title": "Principal ML Scientist",
+        "recent_signals": [
+          {
+            "date": "2026-01-15",
+            "type": "tweet",
+            "content": "The hardest part of scaling a research team isn't the GPUs, it's the trust. Friday architecture reviews with new hires have become the highlight of my week."
+          },
+          {
+            "date": "2025-11-03",
+            "type": "blog_post",
+            "content": "Wrote down some hard-won lessons on transitioning from IC to staff+ in an ML org. Building people is a different kind of compound interest than building models."
+          },
+          {
+            "date": "2025-12-10",
+            "type": "conference_talk",
+            "content": "Panel: 'From Models to Teams' at NeurIPS 2025 - organizing research orgs for sustained impact."
+          }
+        ],
+        "current_company": "Google",
+        "skills_declared": [
+          "Large-scale recommender systems",
+          "Bayesian nonparametrics",
+          "Distributed training infrastructure",
+          "Probabilistic graphical models",
+          "Python, C++, JAX",
+          "Technical writing and peer review",
+          "Mentoring senior ICs",
+          "Cross-functional roadmap alignment"
+        ],
+        "writing_samples": [
+          {
+            "url": "https://jamespark.dev/skeptic",
+            "title": "Why Every ML Team Needs a Skeptic",
+            "excerpt": "The best teams I've built have a designated critic whose job isn't to block shipping, but to quantify uncertainty before we bet the farm."
+          },
+          {
+            "url": "https://jamespark.dev/scaling-people",
+            "title": "Scaling Laws for Human Capital",
+            "excerpt": "We obsess over compute scaling, but the marginal return on investing in junior researchers compounds faster than adding another 1000 GPUs."
+          }
+        ],
+        "years_experience": 14,
+        "stated_preferences": {
+          "domains": [
+            "Consumer AI",
+            "AI infrastructure",
+            "Scientific computing"
+          ],
+          "comp_range": "$450k–$650k total comp",
+          "remote_preference": "Hybrid; based in Seattle"
+        },
+        "skills_demonstrated": [
+          {
+            "skill": "Large-scale recommender systems",
+            "evidence_refs": [
+              "Instagram Reels ranking at Meta",
+              "Xbox Live recommendation at Microsoft Research"
+            ]
+          },
+          {
+            "skill": "Probabilistic modeling",
+            "evidence_refs": [
+              "PhD thesis on Bayesian nonparametrics",
+              "Internal probabilistic DSL at Meta"
+            ]
+          },
+          {
+            "skill": "Research leadership",
+            "evidence_refs": [
+              "Mentored 4 PhD interns at Google",
+              "Tech lead for 8-person pod at Google"
+            ]
+          },
+          {
+            "skill": "Distributed systems",
+            "evidence_refs": [
+              "Next-gen search ranking at Google",
+              "Multimodal understanding research agenda"
+            ]
+          }
+        ],
+        "open_source_contributions": [
+          {
+            "repo": "google-research/tabular-aug",
+            "stars": 420,
+            "description": "Lightweight augmentation primitives for structured data in JAX"
+          },
+          {
+            "repo": "pytorch/torchdistx",
+            "stars": 890,
+            "description": "Contributed deferred initialization and checkpointing utilities"
+          }
+        ]
+      },
+      "match_score": 88,
+      "match_evidence": {
+        "red_flags": [],
+        "depth_score": 16,
+        "requirements": [
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Shipped production recommendation model for Xbox Live",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_1",
+            "requirement_description": "5+ years of software engineering experience with at least 2 years shipping production ML/AI systems"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Shipped production recommendation model for Xbox Live",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_2",
+            "requirement_description": "Demonstrated work with modern LLM tooling including agent frameworks, eval harnesses, RAG pipelines, or tool-use patterns"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Shipped production recommendation model for Xbox Live",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_3",
+            "requirement_description": "Production ownership of a non-trivial AI system from prompt design through deployment (via portfolio, OSS, or prior role)"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Shipped production recommendation model for Xbox Live",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_4",
+            "requirement_description": "Experience designing and shipping multi-agent pipelines (planner/reactor/verifier patterns) against frontier LLMs"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Shipped production recommendation model for Xbox Live",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_5",
+            "requirement_description": "Experience building evaluation harnesses for LLM/agent systems"
+          }
+        ],
+        "trajectory_score": 16,
+        "overall_reasoning": "Selected by local fallback after the model rerank timed out. Review the evidence carefully before treating the match score as final."
+      },
+      "interest_score": 39,
+      "interest_evidence": {
+        "signals": [
+          {
+            "name": "specificity_of_engagement",
+            "score": 9,
+            "evidence": [
+              {
+                "span": "Is this an IC role or would there be a team to build?",
+                "turn": 2,
+                "reasoning": "Candidate asks a targeted question about the role's structure and scope rather than responding with generic pleasantries."
+              }
+            ]
+          },
+          {
+            "name": "forward_commitment",
+            "score": 8,
+            "evidence": [
+              {
+                "span": "Yes, but I am probably not the right target if it is mostly hands-on.",
+                "turn": 8,
+                "reasoning": "Candidate gives a qualified yes to a technical intro but immediately undercuts it with doubt, showing minimal forward motion."
+              }
+            ]
+          },
+          {
+            "name": "objection_handling",
+            "score": 13,
+            "evidence": [
+              {
+                "span": "My concern is the level. I can still be hands-on, but I would not want my next move to narrow my scope.",
+                "turn": 6,
+                "reasoning": "Candidate explicitly surfaces a concern about role level and scope but does not update their view or resolve it positively."
+              }
+            ]
+          },
+          {
+            "name": "availability_timing",
+            "score": 4,
+            "evidence": [
+              {
+                "span": "I am not actively looking.",
+                "turn": 4,
+                "reasoning": "Candidate directly states they are not actively looking, signaling low readiness and no short timeline."
+              }
+            ]
+          },
+          {
+            "name": "motivation_alignment",
+            "score": 5,
+            "evidence": [
+              {
+                "span": "I would only move for a role with real leadership scope and a path to building a team.",
+                "turn": 4,
+                "reasoning": "Candidate's stated drivers center on leadership and team building, which conflict with the role's hands-on IC focus."
+              }
+            ]
+          }
+        ],
+        "risk_flags": [
+          "Candidate seeking people-management and leadership scope which conflicts with IC hands-on role per red_flags",
+          "Not actively looking and only open to specific leadership opportunities",
+          "Persistent objections on scope with no positive update in view"
+        ],
+        "overall_reasoning": "The candidate demonstrates low genuine interest overall. They are not actively looking and repeatedly emphasize the need for leadership scope and team-building, which directly conflicts with the hands-on IC nature of the role. While they surface clear objections and agree to an intro with heavy qualifications, they conclude they are probably not the right target. This suggests the conversation is exploratory at best with high risk of dropping off."
+      },
+      "cohort": "nurture",
+      "next_action_draft": "I appreciate you sharing that context about what you're looking for. I completely understand that the timing isn't right and that this particular role doesn't line up with the leadership scope you're targeting next. \n\nI'd be happy to keep you updated from time to time on the kind of work our team is doing and any future opportunities that might be a better match. Please feel free to reach out whenever your situation changes or if you ever want to explore what's new on our side.\n\nLooking forward to staying in touch.",
+      "rank_within_cohort": 2,
+      "status": "complete",
+      "created_at": "2026-04-24T23:25:35.474771+00:00",
+      "updated_at": "2026-04-24T23:27:08.212573+00:00"
+    },
+    {
+      "id": "048a4aa5-2660-4dbb-ba08-0fb46e82a65d",
+      "run_id": "demo",
+      "pool_candidate_id": "strong_01",
+      "profile_json": {
+        "id": "strong_01",
+        "name": "Priya Menon",
+        "location": "San Francisco, CA",
+        "education": [
+          {
+            "year": 2019,
+            "degree": "BS Computer Science",
+            "institution": "UC Berkeley"
+          },
+          {
+            "year": 2022,
+            "degree": "MS Data Science",
+            "institution": "Georgia Tech"
+          }
+        ],
+        "work_history": [
+          {
+            "role": "Applied ML Engineer",
+            "years": 2,
+            "company": "Mercury",
+            "end_year": null,
+            "highlights": [
+              "Built invoice parsing pipeline using LLMs that reduced manual review by 40%",
+              "Deployed fine-tuned BERT models for real-time transaction categorization",
+              "Designed evaluation framework for agentic document-processing workflows"
+            ],
+            "start_year": 2023
+          },
+          {
+            "role": "ML Engineer",
+            "years": 3,
+            "company": "Dropbox",
+            "end_year": 2023,
+            "highlights": [
+              "Shipped semantic search over enterprise documents using dual-encoder architectures",
+              "Led migration from TensorFlow to PyTorch for core ML services",
+              "Built feature store and model versioning system used by 8 teams"
+            ],
+            "start_year": 2020
+          },
+          {
+            "role": "Software Engineer",
+            "years": 1,
+            "company": "Blend",
+            "end_year": 2020,
+            "highlights": [
+              "Developed backend services for mortgage-automation pipelines",
+              "Introduced type hints and integration testing culture to the data platform team"
+            ],
+            "start_year": 2019
+          }
+        ],
+        "current_title": "Applied ML Engineer",
+        "recent_signals": [
+          {
+            "date": "2024-05-10",
+            "type": "tweet",
+            "content": "Evals are the new unit tests. Fight me."
+          },
+          {
+            "date": "2024-06-01",
+            "type": "github_activity",
+            "content": "Merged PR #44: Add support for multi-turn tool calling in structured-extract"
+          }
+        ],
+        "current_company": "Mercury",
+        "skills_declared": [
+          "Python",
+          "PyTorch",
+          "Transformers",
+          "LLM fine-tuning",
+          "Vector DBs",
+          "AWS",
+          "Kubernetes",
+          "Agent orchestration",
+          "Evaluation metrics"
+        ],
+        "writing_samples": [
+          {
+            "url": "https://substack.com/p/beyond-rag-mercury",
+            "title": "Beyond RAG: Building Deterministic Agents for Financial Workflows",
+            "excerpt": "We found that chaining LLMs with structured output schemas and tool-use loops reduced hallucination rates from 12% to 2% while maintaining sub-second latency."
+          }
+        ],
+        "years_experience": 6,
+        "stated_preferences": {
+          "domains": [
+            "fintech",
+            "developer tools",
+            "AI infrastructure"
+          ],
+          "comp_range": "$220k-$280k base",
+          "remote_preference": "hybrid"
+        },
+        "skills_demonstrated": [
+          {
+            "skill": "LLM fine-tuning",
+            "evidence_refs": [
+              "Built invoice parsing pipeline using LLMs that reduced manual review by 40%"
+            ]
+          },
+          {
+            "skill": "Agent orchestration",
+            "evidence_refs": [
+              "Designed evaluation framework for agentic document-processing workflows"
+            ]
+          },
+          {
+            "skill": "Vector search",
+            "evidence_refs": [
+              "Shipped semantic search over enterprise documents using dual-encoder architectures"
+            ]
+          },
+          {
+            "skill": "PyTorch",
+            "evidence_refs": [
+              "Led migration from TensorFlow to PyTorch for core ML services"
+            ]
+          }
+        ],
+        "open_source_contributions": [
+          {
+            "repo": "mercury-ai/structured-extract",
+            "stars": 340,
+            "description": "Lightweight library for structured extraction from financial documents"
+          }
+        ]
+      },
+      "match_score": 79,
+      "match_evidence": {
+        "red_flags": [],
+        "depth_score": 19,
+        "requirements": [
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built invoice parsing pipeline using LLMs that reduced manual review by 40%",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_1",
+            "requirement_description": "5+ years of software engineering experience with at least 2 years shipping production ML/AI systems"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built invoice parsing pipeline using LLMs that reduced manual review by 40%",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_2",
+            "requirement_description": "Demonstrated work with modern LLM tooling including agent frameworks, eval harnesses, RAG pipelines, or tool-use patterns"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built invoice parsing pipeline using LLMs that reduced manual review by 40%",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_3",
+            "requirement_description": "Production ownership of a non-trivial AI system from prompt design through deployment (via portfolio, OSS, or prior role)"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built invoice parsing pipeline using LLMs that reduced manual review by 40%",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_4",
+            "requirement_description": "Experience designing and shipping multi-agent pipelines (planner/reactor/verifier patterns) against frontier LLMs"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built invoice parsing pipeline using LLMs that reduced manual review by 40%",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_5",
+            "requirement_description": "Experience building evaluation harnesses for LLM/agent systems"
+          }
+        ],
+        "trajectory_score": 17,
+        "overall_reasoning": "Selected by local fallback after the model rerank timed out. Review the evidence carefully before treating the match score as final."
+      },
+      "interest_score": 73,
+      "interest_evidence": {
+        "signals": [
+          {
+            "name": "specificity_of_engagement",
+            "score": 16,
+            "evidence": [
+              {
+                "span": "Are these agents internal tools or customer-facing workflows? I would want to understand the technical depth.",
+                "turn": 2,
+                "reasoning": "Candidate engages directly with role specifics by inquiring about agent usage and technical depth rather than giving a generic reply."
+              },
+              {
+                "span": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me.",
+                "turn": 6,
+                "reasoning": "Candidate references concrete aspects like engineering-led work and eval loops that match the role's focus on production reliability."
+              }
+            ]
+          },
+          {
+            "name": "forward_commitment",
+            "score": 17,
+            "evidence": [
+              {
+                "span": "I can do an intro call next week if you send a short technical brief first.",
+                "turn": 8,
+                "reasoning": "Candidate proposes a concrete next step with a specific timeline, signaling willingness to advance the process."
+              }
+            ]
+          },
+          {
+            "name": "objection_handling",
+            "score": 14,
+            "evidence": [
+              {
+                "span": "I am not desperate to leave, but doing more direct AI systems work is appealing if the team values reliability.",
+                "turn": 4,
+                "reasoning": "Candidate surfaces a concern about current satisfaction but updates view based on role's reliability focus."
+              },
+              {
+                "span": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me.",
+                "turn": 6,
+                "reasoning": "Candidate raises a specific objection about prototype vs production work and ties it to what matters to them."
+              }
+            ]
+          },
+          {
+            "name": "availability_timing",
+            "score": 11,
+            "evidence": [
+              {
+                "span": "I am not desperate to leave",
+                "turn": 4,
+                "reasoning": "Candidate explicitly signals they are not actively seeking to leave, indicating low urgency."
+              },
+              {
+                "span": "I can do an intro call next week",
+                "turn": 8,
+                "reasoning": "Candidate shows some readiness by offering availability in the near term."
+              }
+            ]
+          },
+          {
+            "name": "motivation_alignment",
+            "score": 15,
+            "evidence": [
+              {
+                "span": "doing more direct AI systems work is appealing if the team values reliability.",
+                "turn": 4,
+                "reasoning": "Candidate's stated drivers around direct AI systems and reliability align with the role's emphasis on production ownership and eval loops."
+              }
+            ]
+          }
+        ],
+        "risk_flags": [
+          "Candidate is not actively looking as evidenced by 'I am not desperate to leave'",
+          "Commitment is conditional on receiving a technical brief first"
+        ],
+        "overall_reasoning": "The candidate demonstrates genuine interest through targeted questions on agent types, technical depth, and production vs prototype work that map closely to the role. They commit to a next-step call but condition it on receiving a brief and note they are not desperate to leave. This suggests moderate interest from a passive but selective candidate whose values align with the production-focused requirements. Overall the engagement feels authentic but not highly urgent."
+      },
+      "cohort": "recommended",
+      "next_action_draft": "Hi Priya, thanks for the thoughtful conversation. I really appreciated how you zeroed in on whether the agents are customer-facing and the importance of engineering-led eval loops and reliability. It was clear that deeper AI systems work genuinely appeals to you as long as the team shares your standards for production quality. \n\nI'd like to move you forward with a 30-minute technical intro call with our hiring manager. Would Tuesday at 11am or Thursday at 2pm next week work for you? I'll send over a short technical brief ahead of the call so we can make the discussion as useful as possible.",
+      "rank_within_cohort": 3,
+      "status": "complete",
+      "created_at": "2026-04-24T23:25:35.474771+00:00",
+      "updated_at": "2026-04-24T23:27:08.215937+00:00"
+    },
+    {
+      "id": "00eabddf-3bcc-4a7a-b69a-354938cb9a68",
+      "run_id": "demo",
+      "pool_candidate_id": "strong_19",
+      "profile_json": {
+        "id": "strong_19",
+        "name": "Jordan Lee",
+        "location": "Austin, TX",
+        "education": [
+          {
+            "year": 2021,
+            "degree": "BS Computer Science",
+            "institution": "University of Texas at Austin"
+          }
+        ],
+        "work_history": [
+          {
+            "role": "Senior AI Engineer",
+            "years": 1.5,
+            "company": "Replit",
+            "end_year": null,
+            "highlights": [
+              "Built agentic code-editing loop for Replit AI",
+              "Integrated tree-sitter AST parsing with LLM tool calls",
+              "Reduced false-positive code edits by 35%"
+            ],
+            "start_year": 2023
+          },
+          {
+            "role": "Software Engineer",
+            "years": 2,
+            "company": "LangChain",
+            "end_year": 2023,
+            "highlights": [
+              "Core contributor to LangChain agents module",
+              "Built retrieval and tool-use abstractions used by 10k+ developers"
+            ],
+            "start_year": 2021
+          },
+          {
+            "role": "Software Engineer",
+            "years": 0.5,
+            "company": "Cisco",
+            "end_year": 2021,
+            "highlights": [
+              "Built internal automation tooling for network config generation"
+            ],
+            "start_year": 2021
+          }
+        ],
+        "current_title": "Senior AI Engineer",
+        "recent_signals": [
+          {
+            "date": "2024-05-25",
+            "type": "tweet",
+            "content": "Agent evaluation is the new prompt engineering. If you can't measure task completion rate across 100+ traces, you're flying blind."
+          },
+          {
+            "date": "2024-05-18",
+            "type": "github_activity",
+            "content": "Released v2.0 of structured-agent-toolkit with Anthropic tool-use support"
+          }
+        ],
+        "current_company": "Replit",
+        "skills_declared": [
+          "Python",
+          "TypeScript",
+          "LangChain",
+          "LangGraph",
+          "OpenAI API",
+          "Anthropic API",
+          "AST parsing",
+          "React",
+          "Node.js"
+        ],
+        "writing_samples": [
+          {
+            "url": "https://jordanlee.dev/agent-loops",
+            "title": "Designing Agent Loops That Don't Hallucinate",
+            "excerpt": "The key is to treat the LLM as a state machine with explicit rollback transitions rather than an open-ended conversational agent..."
+          }
+        ],
+        "years_experience": 4,
+        "stated_preferences": {
+          "domains": [
+            "Developer tools",
+            "Agentic AI",
+            "Code intelligence"
+          ],
+          "comp_range": "$180k-$240k TC",
+          "remote_preference": "Remote or Austin-based"
+        },
+        "skills_demonstrated": [
+          {
+            "skill": "Agent frameworks",
+            "evidence_refs": [
+              "Core contributor to LangChain agents module"
+            ]
+          },
+          {
+            "skill": "Code generation",
+            "evidence_refs": [
+              "Built agentic code-editing loop for Replit AI"
+            ]
+          },
+          {
+            "skill": "Tool use / function calling",
+            "evidence_refs": [
+              "Integrated tree-sitter AST parsing with LLM tool calls"
+            ]
+          }
+        ],
+        "open_source_contributions": [
+          {
+            "repo": "langchain-ai/langchain",
+            "stars": 88000,
+            "description": "Core contributions to agents and tool-use modules"
+          },
+          {
+            "repo": "jordanlee/structured-agent-toolkit",
+            "stars": 420,
+            "description": "Type-safe tool definitions for LLM agents"
+          }
+        ]
+      },
+      "match_score": 72,
+      "match_evidence": {
+        "red_flags": [],
+        "depth_score": 15,
+        "requirements": [
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built agentic code-editing loop for Replit AI",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_1",
+            "requirement_description": "5+ years of software engineering experience with at least 2 years shipping production ML/AI systems"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built agentic code-editing loop for Replit AI",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_2",
+            "requirement_description": "Demonstrated work with modern LLM tooling including agent frameworks, eval harnesses, RAG pipelines, or tool-use patterns"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built agentic code-editing loop for Replit AI",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_3",
+            "requirement_description": "Production ownership of a non-trivial AI system from prompt design through deployment (via portfolio, OSS, or prior role)"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built agentic code-editing loop for Replit AI",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_4",
+            "requirement_description": "Experience designing and shipping multi-agent pipelines (planner/reactor/verifier patterns) against frontier LLMs"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Built agentic code-editing loop for Replit AI",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_5",
+            "requirement_description": "Experience building evaluation harnesses for LLM/agent systems"
+          }
+        ],
+        "trajectory_score": 13,
+        "overall_reasoning": "Selected by local fallback after the model rerank timed out. Review the evidence carefully before treating the match score as final."
+      },
+      "interest_score": 71,
+      "interest_evidence": {
+        "signals": [
+          {
+            "name": "specificity_of_engagement",
+            "score": 17,
+            "evidence": [
+              {
+                "span": "Are these agents internal tools or customer-facing workflows? I would want to understand the technical depth.",
+                "turn": 2,
+                "reasoning": "Candidate engages directly with role specifics by inquiring about agent use cases and technical depth rather than giving generic replies."
+              },
+              {
+                "span": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me.",
+                "turn": 6,
+                "reasoning": "Further specificity shown by probing engineering-led vs prototype nature and highlighting eval loops which map to the role's success criteria."
+              }
+            ]
+          },
+          {
+            "name": "forward_commitment",
+            "score": 14,
+            "evidence": [
+              {
+                "span": "I can do an intro call next week if you send a short technical brief first.",
+                "turn": 8,
+                "reasoning": "Candidate proposes a concrete next action with timing, signaling movement toward a technical screen even if conditional."
+              }
+            ]
+          },
+          {
+            "name": "objection_handling",
+            "score": 15,
+            "evidence": [
+              {
+                "span": "I am not desperate to leave, but doing more direct AI systems work is appealing if the team values reliability.",
+                "turn": 4,
+                "reasoning": "Candidate surfaces a key objection about current satisfaction while stating conditions under which they would engage, allowing recruiter to address alignment."
+              },
+              {
+                "span": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me.",
+                "turn": 6,
+                "reasoning": "Specific concern about work type is raised and tied to what matters to them, showing they are evaluating fit rather than brushing it aside."
+              }
+            ]
+          },
+          {
+            "name": "availability_timing",
+            "score": 10,
+            "evidence": [
+              {
+                "span": "I am not desperate to leave",
+                "turn": 4,
+                "reasoning": "Explicit statement indicates candidate is not actively searching or in a rush, lowering readiness to move despite later openness to a call."
+              }
+            ]
+          },
+          {
+            "name": "motivation_alignment",
+            "score": 15,
+            "evidence": [
+              {
+                "span": "but doing more direct AI systems work is appealing if the team values reliability.",
+                "turn": 4,
+                "reasoning": "Candidate's stated driver for more direct AI systems work focused on reliability aligns with the role's emphasis on production ownership, eval loops, and shipping standards."
+              }
+            ]
+          }
+        ],
+        "risk_flags": [
+          "Candidate is not desperate to leave current role",
+          "Availability conditional on receiving a technical brief first",
+          "Potential mismatch if role leans too heavily toward prototyping"
+        ],
+        "overall_reasoning": "The candidate shows clear interest through targeted questions on agent workflows, technical depth, engineering vs prototype work, and eval loops that directly map to the role's must-haves and success criteria. They surface objections productively and commit to an intro call next week, indicating moderate-to-high genuine interest rather than polite deflection. However the explicit note about not being desperate to leave signals they are passively open and will need strong evidence of reliability focus and autonomy to convert. Overall this is a solid but conditional prospect who is evaluating fit carefully."
+      },
+      "cohort": "recommended",
+      "next_action_draft": "Hi Jordan, thanks for the thoughtful conversation. I appreciated how you dove into the specifics around whether our agents are customer-facing and your emphasis on engineering-led work with strong eval loops, those are exactly the kinds of details that show this role could be a great fit. Your point about valuing reliability over prototype-style projects really resonated with how our team operates.\n\nI'd like to move forward by setting up a 30-minute call with our hiring manager so you can explore those questions directly. Would Tuesday at 11am or Thursday at 2pm next week work for you? I'll include a short technical brief ahead of the call as you requested.\n\nLooking forward to your thoughts.",
+      "rank_within_cohort": 4,
+      "status": "complete",
+      "created_at": "2026-04-24T23:25:35.474771+00:00",
+      "updated_at": "2026-04-24T23:27:08.212453+00:00"
+    },
+    {
+      "id": "6932bd75-6212-48f9-99a3-617cd012612d",
+      "run_id": "demo",
+      "pool_candidate_id": "hero_3_inference_surfacer",
+      "profile_json": {
+        "id": "hero_3_inference_surfacer",
+        "name": "Jonas Park",
+        "location": "Toronto, Canada",
+        "education": [
+          {
+            "year": 2016,
+            "degree": "BSc Computer Science",
+            "institution": "University of Toronto"
+          }
+        ],
+        "work_history": [
+          {
+            "role": "Senior Backend Engineer",
+            "years": 7,
+            "company": "PostHog",
+            "end_year": null,
+            "highlights": [
+              "Redesigned event ingestion pipeline to handle 50k+ events/sec with exactly-once semantics",
+              "Led migration of billing services from monolith to service-oriented architecture"
+            ],
+            "start_year": 2019
+          },
+          {
+            "role": "Software Engineer II",
+            "years": 2,
+            "company": "Shopify",
+            "end_year": 2019,
+            "highlights": [
+              "Built inventory reservation system supporting flash-sale traffic spikes",
+              "Reduced p95 PostgreSQL query latency by 40% through query restructuring and indexing strategy"
+            ],
+            "start_year": 2017
+          },
+          {
+            "role": "Junior Backend Developer",
+            "years": 1,
+            "company": "Wealthsimple",
+            "end_year": 2017,
+            "highlights": [
+              "Developed internal microservice for real-time portfolio reconciliation",
+              "Contributed to migration of core banking logic from Ruby to Python"
+            ],
+            "start_year": 2016
+          }
+        ],
+        "current_title": "Senior Backend Engineer",
+        "recent_signals": [
+          {
+            "date": "2026-04-10",
+            "type": "tweet",
+            "content": "Been experimenting with hierarchical agent graphs this week. The boundary between 'tool' and 'sub-agent' is blurrier than most tutorials suggest. Thread 🧵"
+          },
+          {
+            "date": "2026-03-28",
+            "type": "github_activity",
+            "content": "Pushed 3 commits to pydantic/pydantic-ai fixing race condition in parallel tool calls under high concurrency"
+          },
+          {
+            "date": "2026-02-15",
+            "type": "blog_post",
+            "content": "Published 'Why Your Agent Needs a State Machine, Not Just a Loop' on jonaspark.dev"
+          }
+        ],
+        "current_company": "PostHog",
+        "skills_declared": [
+          "Python",
+          "PostgreSQL",
+          "AWS",
+          "Redis",
+          "Kafka",
+          "Distributed Systems",
+          "FastAPI",
+          "Kubernetes",
+          "Terraform",
+          "System Design",
+          "Event-Driven Architecture"
+        ],
+        "writing_samples": [
+          {
+            "url": "https://jonaspark.dev/blog/llm-tool-evaluation-framework",
+            "title": "Beyond Perplexity: A Structured Approach to Evaluating Tool-Using LLMs",
+            "excerpt": "Most public benchmarks measure single-turn correctness, but agentic systems require multi-step protocol evaluation. I propose a framework built on trajectory faithfulness, tool selection accuracy, and rollback efficiency..."
+          }
+        ],
+        "years_experience": 10,
+        "stated_preferences": {
+          "domains": [
+            "Developer Tools",
+            "AI Infrastructure",
+            "B2B SaaS"
+          ],
+          "comp_range": "CAD 170k–210k",
+          "remote_preference": "Remote-first with quarterly in-person offsites"
+        },
+        "skills_demonstrated": [
+          {
+            "skill": "agent orchestration",
+            "evidence_refs": [
+              "open_source_contributions: langchain-ai/langgraph",
+              "open_source_contributions: pydantic/pydantic-ai"
+            ]
+          },
+          {
+            "skill": "LLM evaluation",
+            "evidence_refs": [
+              "writing_samples: Beyond Perplexity: A Structured Approach to Evaluating Tool-Using LLMs",
+              "recent_signals: blog_post Why Your Agent Needs a State Machine"
+            ]
+          },
+          {
+            "skill": "distributed systems design",
+            "evidence_refs": [
+              "work_history: PostHog event ingestion pipeline",
+              "work_history: PostHog monolith migration"
+            ]
+          },
+          {
+            "skill": "Python async patterns",
+            "evidence_refs": [
+              "work_history: PostHog",
+              "open_source_contributions: pydantic/pydantic-ai"
+            ]
+          }
+        ],
+        "open_source_contributions": [
+          {
+            "repo": "langchain-ai/langgraph",
+            "stars": 21000,
+            "description": "Added checkpointing support for async streaming in nested subgraphs"
+          },
+          {
+            "repo": "pydantic/pydantic-ai",
+            "stars": 4500,
+            "description": "Implemented exponential backoff and retry logic for agent tool execution loops"
+          },
+          {
+            "repo": "run-llama/llama_index",
+            "stars": 38000,
+            "description": "Refactored document ingestion pipeline to support custom transformation callbacks"
+          }
+        ]
+      },
+      "match_score": 82,
+      "match_evidence": {
+        "red_flags": [],
+        "depth_score": 20,
+        "requirements": [
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Redesigned event ingestion pipeline to handle 50k+ events/sec with exactly-once semantics",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_1",
+            "requirement_description": "5+ years of software engineering experience with at least 2 years shipping production ML/AI systems"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Redesigned event ingestion pipeline to handle 50k+ events/sec with exactly-once semantics",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_2",
+            "requirement_description": "Demonstrated work with modern LLM tooling including agent frameworks, eval harnesses, RAG pipelines, or tool-use patterns"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Redesigned event ingestion pipeline to handle 50k+ events/sec with exactly-once semantics",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_3",
+            "requirement_description": "Production ownership of a non-trivial AI system from prompt design through deployment (via portfolio, OSS, or prior role)"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Redesigned event ingestion pipeline to handle 50k+ events/sec with exactly-once semantics",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_4",
+            "requirement_description": "Experience designing and shipping multi-agent pipelines (planner/reactor/verifier patterns) against frontier LLMs"
+          },
+          {
+            "met": true,
+            "score": 16,
+            "citation": "Redesigned event ingestion pipeline to handle 50k+ events/sec with exactly-once semantics",
+            "reasoning": "Local fallback found related public-profile evidence for this requirement.",
+            "requirement_id": "req_5",
+            "requirement_description": "Experience building evaluation harnesses for LLM/agent systems"
+          }
+        ],
+        "trajectory_score": 20,
+        "overall_reasoning": "Selected by local fallback after the model rerank timed out. Review the evidence carefully before treating the match score as final."
+      },
+      "interest_score": 71,
+      "interest_evidence": {
+        "signals": [
+          {
+            "name": "specificity_of_engagement",
+            "score": 16,
+            "evidence": [
+              {
+                "span": "Are these agents internal tools or customer-facing workflows? I would want to understand the technical depth.",
+                "turn": 2,
+                "reasoning": "Candidate directly engages with role details by inquiring about agent usage context and technical depth rather than giving a generic response."
+              },
+              {
+                "span": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me.",
+                "turn": 6,
+                "reasoning": "Candidate references specific aspects like engineering-led work and eval loops that align with the role's emphasis on production reliability and evals."
+              }
+            ]
+          },
+          {
+            "name": "forward_commitment",
+            "score": 15,
+            "evidence": [
+              {
+                "span": "I can do an intro call next week if you send a short technical brief first.",
+                "turn": 8,
+                "reasoning": "Candidate proposes a concrete next step with a specific timeline, signaling willingness to move forward even if conditional."
+              }
+            ]
+          },
+          {
+            "name": "objection_handling",
+            "score": 14,
+            "evidence": [
+              {
+                "span": "I am not desperate to leave, but doing more direct AI systems work is appealing if the team values reliability.",
+                "turn": 4,
+                "reasoning": "Candidate surfaces a key objection about current satisfaction while expressing conditional interest tied to reliability, which the role emphasizes."
+              },
+              {
+                "span": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me.",
+                "turn": 6,
+                "reasoning": "Candidate raises a specific concern about prototype vs production focus and engages by noting what matters to them."
+              }
+            ]
+          },
+          {
+            "name": "availability_timing",
+            "score": 11,
+            "evidence": [
+              {
+                "span": "I am not desperate to leave, but doing more direct AI systems work is appealing if the team values reliability.",
+                "turn": 4,
+                "reasoning": "Candidate explicitly signals low urgency to move, indicating they are not actively searching."
+              },
+              {
+                "span": "I can do an intro call next week if you send a short technical brief first.",
+                "turn": 8,
+                "reasoning": "Candidate shows some short-term availability for an intro call but conditions it on receiving materials first."
+              }
+            ]
+          },
+          {
+            "name": "motivation_alignment",
+            "score": 15,
+            "evidence": [
+              {
+                "span": "I am not desperate to leave, but doing more direct AI systems work is appealing if the team values reliability.",
+                "turn": 4,
+                "reasoning": "Candidate's interest in direct AI systems work and reliability directly matches the role's focus on production ownership, eval loops, and reliability."
+              },
+              {
+                "span": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me.",
+                "turn": 6,
+                "reasoning": "Candidate highlights eval loops as important, aligning with success criteria around improving eval harnesses and production focus."
+              }
+            ]
+          }
+        ],
+        "risk_flags": [
+          "Candidate is not desperate to leave, indicating passive interest and low urgency",
+          "Commitment to next step is conditional on receiving a technical brief first",
+          "Concern about prototype vs production work could signal mismatch if role details don't satisfy"
+        ],
+        "overall_reasoning": "The candidate demonstrates genuine but measured interest by asking targeted questions about agent types, technical depth, engineering ownership, and eval loops that map well to the role's production AI focus. However, statements about not being desperate to leave and requiring a technical brief before committing indicate passive candidacy rather than high enthusiasm or active search. Objections were surfaced productively and not brushed aside, leading to a conditional forward step. Overall interest level is solid for a senior profile with relevant background but carries risk of low urgency to move."
+      },
+      "cohort": "recommended",
+      "next_action_draft": "Hi Jonas, thanks for the thoughtful conversation. I appreciated how directly you asked about whether the agents are internal or customer-facing and your focus on the eval loops and engineering ownership, those are exactly the kinds of production reliability questions our team obsesses over. It's also clear you're not actively looking but would be excited by deeper AI systems work that values reliability and shipping standards, which aligns well with the role. \n\nI'd like to schedule a 30-minute call with our hiring manager to dive into those topics. Would Tuesday at 11am or Thursday at 2pm next week work for you? I'll send over a short technical brief ahead of the call as you requested.",
+      "rank_within_cohort": 5,
+      "status": "complete",
+      "created_at": "2026-04-24T23:25:35.474771+00:00",
+      "updated_at": "2026-04-24T23:27:08.21573+00:00"
+    }
+  ],
+  "conversations": {
+    "0d5ab93e-dbc5-4014-8b34-0ff77a5fd9f4": [
+      {
+        "turn_number": 1,
+        "speaker": "recruiter",
+        "content": "Jules, Deccan AI is hiring a Agentic AI Engineer. Your background at Trellis (YC W23) stood out because of the overlap with production AI systems. Would you be open to a quick conversation?"
+      },
+      {
+        "turn_number": 2,
+        "speaker": "candidate",
+        "content": "Yes. What does ownership look like in the first 90 days? I am actively interviewing and want a team that treats evals as real engineering."
+      },
+      {
+        "turn_number": 3,
+        "speaker": "recruiter",
+        "content": "The work is hands-on: own agent reliability, eval loops, tool-use behavior, and production workflow quality."
+      },
+      {
+        "turn_number": 4,
+        "speaker": "candidate",
+        "content": "This is very close to what I want next. I want to work closer to the agent loop and ship durable systems, not demos."
+      },
+      {
+        "turn_number": 5,
+        "speaker": "recruiter",
+        "content": "That is helpful context. The first screen would focus on how you reason about failure modes, shipping standards, and ownership."
+      },
+      {
+        "turn_number": 6,
+        "speaker": "candidate",
+        "content": "My main question is how stable the roadmap is. If the team has focus, I would be excited to go deep."
+      },
+      {
+        "turn_number": 7,
+        "speaker": "recruiter",
+        "content": "I can set up a technical intro with the hiring manager and keep it focused on those questions."
+      },
+      {
+        "turn_number": 8,
+        "speaker": "candidate",
+        "content": "I can make time this week. Send over a few times and I will prioritize it."
+      }
+    ],
+    "a72d4cc9-31d8-4d4a-a957-4aa05418ee1f": [
+      {
+        "turn_number": 1,
+        "speaker": "recruiter",
+        "content": "Jin, Deccan AI is hiring a Agentic AI Engineer. Your background at Prism Labs stood out because of the overlap with production AI systems. Would you be open to a quick conversation?"
+      },
+      {
+        "turn_number": 2,
+        "speaker": "candidate",
+        "content": "Yes. What does ownership look like in the first 90 days? I am actively interviewing and want a team that treats evals as real engineering."
+      },
+      {
+        "turn_number": 3,
+        "speaker": "recruiter",
+        "content": "The work is hands-on: own agent reliability, eval loops, tool-use behavior, and production workflow quality."
+      },
+      {
+        "turn_number": 4,
+        "speaker": "candidate",
+        "content": "This is very close to what I want next. I want to work closer to the agent loop and ship durable systems, not demos."
+      },
+      {
+        "turn_number": 5,
+        "speaker": "recruiter",
+        "content": "That is helpful context. The first screen would focus on how you reason about failure modes, shipping standards, and ownership."
+      },
+      {
+        "turn_number": 6,
+        "speaker": "candidate",
+        "content": "My main question is how stable the roadmap is. If the team has focus, I would be excited to go deep."
+      },
+      {
+        "turn_number": 7,
+        "speaker": "recruiter",
+        "content": "I can set up a technical intro with the hiring manager and keep it focused on those questions."
+      },
+      {
+        "turn_number": 8,
+        "speaker": "candidate",
+        "content": "I can make time this week. Send over a few times and I will prioritize it."
+      }
+    ],
+    "2b1f76cf-7493-419c-8a83-bd9762f0dced": [
+      {
+        "turn_number": 1,
+        "speaker": "recruiter",
+        "content": "Maya, Deccan AI is hiring a Agentic AI Engineer. Your background at Anthropic stood out because of the overlap with production AI systems. Would you be open to a quick conversation?"
+      },
+      {
+        "turn_number": 2,
+        "speaker": "candidate",
+        "content": "Thanks for reaching out. I am open to learning more, though I am very happy where I am right now."
+      },
+      {
+        "turn_number": 3,
+        "speaker": "recruiter",
+        "content": "The work is hands-on: own agent reliability, eval loops, tool-use behavior, and production workflow quality."
+      },
+      {
+        "turn_number": 4,
+        "speaker": "candidate",
+        "content": "Comp is not really a driver for me right now. I would need a very specific reason to seriously look."
+      },
+      {
+        "turn_number": 5,
+        "speaker": "recruiter",
+        "content": "That is helpful context. The first screen would focus on how you reason about failure modes, shipping standards, and ownership."
+      },
+      {
+        "turn_number": 6,
+        "speaker": "candidate",
+        "content": "I probably would not be able to move quickly. You can send a technical summary and I will read it when I have time."
+      },
+      {
+        "turn_number": 7,
+        "speaker": "recruiter",
+        "content": "I can set up a technical intro with the hiring manager and keep it focused on those questions."
+      },
+      {
+        "turn_number": 8,
+        "speaker": "candidate",
+        "content": "Happy to keep in touch. I appreciate the thoughtful outreach."
+      }
+    ],
+    "4af43dc8-3e14-41d3-be3f-6cef14a40cc9": [
+      {
+        "turn_number": 1,
+        "speaker": "recruiter",
+        "content": "Aisha, Deccan AI is hiring a Agentic AI Engineer. Your background at Archetype AI stood out because of the overlap with production AI systems. Would you be open to a quick conversation?"
+      },
+      {
+        "turn_number": 2,
+        "speaker": "candidate",
+        "content": "Potentially. Are these agents internal tools or customer-facing workflows? I would want to understand the technical depth."
+      },
+      {
+        "turn_number": 3,
+        "speaker": "recruiter",
+        "content": "The work is hands-on: own agent reliability, eval loops, tool-use behavior, and production workflow quality."
+      },
+      {
+        "turn_number": 4,
+        "speaker": "candidate",
+        "content": "I am not desperate to leave, but doing more direct AI systems work is appealing if the team values reliability."
+      },
+      {
+        "turn_number": 5,
+        "speaker": "recruiter",
+        "content": "That is helpful context. The first screen would focus on how you reason about failure modes, shipping standards, and ownership."
+      },
+      {
+        "turn_number": 6,
+        "speaker": "candidate",
+        "content": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me."
+      },
+      {
+        "turn_number": 7,
+        "speaker": "recruiter",
+        "content": "I can set up a technical intro with the hiring manager and keep it focused on those questions."
+      },
+      {
+        "turn_number": 8,
+        "speaker": "candidate",
+        "content": "I can do an intro call next week if you send a short technical brief first."
+      }
+    ],
+    "a93e036e-c289-4293-a5a0-ef67927053ed": [
+      {
+        "turn_number": 1,
+        "speaker": "recruiter",
+        "content": "James, Deccan AI is hiring a Agentic AI Engineer. Your background at Google stood out because of the overlap with production AI systems. Would you be open to a quick conversation?"
+      },
+      {
+        "turn_number": 2,
+        "speaker": "candidate",
+        "content": "Potentially. Is this an IC role or would there be a team to build? I am mostly evaluating leadership-scope opportunities."
+      },
+      {
+        "turn_number": 3,
+        "speaker": "recruiter",
+        "content": "The work is hands-on: own agent reliability, eval loops, tool-use behavior, and production workflow quality."
+      },
+      {
+        "turn_number": 4,
+        "speaker": "candidate",
+        "content": "I am not actively looking. I would only move for a role with real leadership scope and a path to building a team."
+      },
+      {
+        "turn_number": 5,
+        "speaker": "recruiter",
+        "content": "That is helpful context. The first screen would focus on how you reason about failure modes, shipping standards, and ownership."
+      },
+      {
+        "turn_number": 6,
+        "speaker": "candidate",
+        "content": "My concern is the level. I can still be hands-on, but I would not want my next move to narrow my scope."
+      },
+      {
+        "turn_number": 7,
+        "speaker": "recruiter",
+        "content": "I can set up a technical intro with the hiring manager and keep it focused on those questions."
+      },
+      {
+        "turn_number": 8,
+        "speaker": "candidate",
+        "content": "Yes, but I am probably not the right target if it is mostly hands-on."
+      }
+    ],
+    "048a4aa5-2660-4dbb-ba08-0fb46e82a65d": [
+      {
+        "turn_number": 1,
+        "speaker": "recruiter",
+        "content": "Priya, Deccan AI is hiring a Agentic AI Engineer. Your background at Mercury stood out because of the overlap with production AI systems. Would you be open to a quick conversation?"
+      },
+      {
+        "turn_number": 2,
+        "speaker": "candidate",
+        "content": "Potentially. Are these agents internal tools or customer-facing workflows? I would want to understand the technical depth."
+      },
+      {
+        "turn_number": 3,
+        "speaker": "recruiter",
+        "content": "The work is hands-on: own agent reliability, eval loops, tool-use behavior, and production workflow quality."
+      },
+      {
+        "turn_number": 4,
+        "speaker": "candidate",
+        "content": "I am not desperate to leave, but doing more direct AI systems work is appealing if the team values reliability."
+      },
+      {
+        "turn_number": 5,
+        "speaker": "recruiter",
+        "content": "That is helpful context. The first screen would focus on how you reason about failure modes, shipping standards, and ownership."
+      },
+      {
+        "turn_number": 6,
+        "speaker": "candidate",
+        "content": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me."
+      },
+      {
+        "turn_number": 7,
+        "speaker": "recruiter",
+        "content": "I can set up a technical intro with the hiring manager and keep it focused on those questions."
+      },
+      {
+        "turn_number": 8,
+        "speaker": "candidate",
+        "content": "I can do an intro call next week if you send a short technical brief first."
+      }
+    ],
+    "00eabddf-3bcc-4a7a-b69a-354938cb9a68": [
+      {
+        "turn_number": 1,
+        "speaker": "recruiter",
+        "content": "Jordan, Deccan AI is hiring a Agentic AI Engineer. Your background at Replit stood out because of the overlap with production AI systems. Would you be open to a quick conversation?"
+      },
+      {
+        "turn_number": 2,
+        "speaker": "candidate",
+        "content": "Potentially. Are these agents internal tools or customer-facing workflows? I would want to understand the technical depth."
+      },
+      {
+        "turn_number": 3,
+        "speaker": "recruiter",
+        "content": "The work is hands-on: own agent reliability, eval loops, tool-use behavior, and production workflow quality."
+      },
+      {
+        "turn_number": 4,
+        "speaker": "candidate",
+        "content": "I am not desperate to leave, but doing more direct AI systems work is appealing if the team values reliability."
+      },
+      {
+        "turn_number": 5,
+        "speaker": "recruiter",
+        "content": "That is helpful context. The first screen would focus on how you reason about failure modes, shipping standards, and ownership."
+      },
+      {
+        "turn_number": 6,
+        "speaker": "candidate",
+        "content": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me."
+      },
+      {
+        "turn_number": 7,
+        "speaker": "recruiter",
+        "content": "I can set up a technical intro with the hiring manager and keep it focused on those questions."
+      },
+      {
+        "turn_number": 8,
+        "speaker": "candidate",
+        "content": "I can do an intro call next week if you send a short technical brief first."
+      }
+    ],
+    "6932bd75-6212-48f9-99a3-617cd012612d": [
+      {
+        "turn_number": 1,
+        "speaker": "recruiter",
+        "content": "Jonas, Deccan AI is hiring a Agentic AI Engineer. Your background at PostHog stood out because of the overlap with production AI systems. Would you be open to a quick conversation?"
+      },
+      {
+        "turn_number": 2,
+        "speaker": "candidate",
+        "content": "Potentially. Are these agents internal tools or customer-facing workflows? I would want to understand the technical depth."
+      },
+      {
+        "turn_number": 3,
+        "speaker": "recruiter",
+        "content": "The work is hands-on: own agent reliability, eval loops, tool-use behavior, and production workflow quality."
+      },
+      {
+        "turn_number": 4,
+        "speaker": "candidate",
+        "content": "I am not desperate to leave, but doing more direct AI systems work is appealing if the team values reliability."
+      },
+      {
+        "turn_number": 5,
+        "speaker": "recruiter",
+        "content": "That is helpful context. The first screen would focus on how you reason about failure modes, shipping standards, and ownership."
+      },
+      {
+        "turn_number": 6,
+        "speaker": "candidate",
+        "content": "My main concern is whether this is engineering-led or mostly prototype work. The eval loop matters to me."
+      },
+      {
+        "turn_number": 7,
+        "speaker": "recruiter",
+        "content": "I can set up a technical intro with the hiring manager and keep it focused on those questions."
+      },
+      {
+        "turn_number": 8,
+        "speaker": "candidate",
+        "content": "I can do an intro call next week if you send a short technical brief first."
+      }
+    ]
+  }
+}
