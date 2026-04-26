@@ -6,6 +6,7 @@ import { createBrowserClient } from '@/lib/supabase/browser';
 import DiscoverySummary from '@/components/plumb/discovery-summary';
 import CohortSection from '@/components/plumb/cohort-section';
 import CandidateRow from '@/components/plumb/candidate-row';
+import ExportRunButton from '@/components/plumb/export-run-button';
 import { demoFixture } from '@/lib/demo-fixture';
 import type { Cohort, CandidateProfile, MatchEvidence, InterestEvidence } from '@/lib/types';
 
@@ -129,6 +130,15 @@ export default function DemoPage() {
           shortlistedCount={candidates.length}
           sourceLabel="Seeded ATS + portfolio corpus"
           isStaticFallback={source === 'static'}
+        />
+
+        <ExportRunButton
+          runId={runId}
+          run={run}
+          candidates={candidates}
+          sourceLabel="Seeded ATS + portfolio corpus"
+          scannedCount={120}
+          conversations={source === 'static' ? demoFixture.conversations : undefined}
         />
 
         <div className="space-y-6">

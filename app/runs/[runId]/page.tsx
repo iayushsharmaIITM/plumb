@@ -21,6 +21,7 @@ import PipelineProgress from '@/components/plumb/pipeline-progress';
 import DiscoverySummary from '@/components/plumb/discovery-summary';
 import CohortSection from '@/components/plumb/cohort-section';
 import CandidateRow from '@/components/plumb/candidate-row';
+import ExportRunButton from '@/components/plumb/export-run-button';
 import type { Cohort, CandidateProfile, MatchEvidence, InterestEvidence, CandidateReviewDecision } from '@/lib/types';
 
 interface RunData {
@@ -323,6 +324,16 @@ export default function RunDashboard() {
             scannedCount={scannedCount}
             shortlistedCount={candidates.length}
             sourceLabel={sourceLabel}
+          />
+        )}
+
+        {candidates.length > 0 && (
+          <ExportRunButton
+            runId={runId}
+            run={run}
+            candidates={candidates}
+            sourceLabel={sourceLabel}
+            scannedCount={scannedCount}
           />
         )}
 
