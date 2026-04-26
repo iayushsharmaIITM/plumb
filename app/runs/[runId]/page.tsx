@@ -29,6 +29,14 @@ interface RunData {
   jd_text: string;
   jd_parsed: Record<string, unknown> | null;
   error_message: string | null;
+  talent_database_id?: string | null;
+}
+
+interface TalentDatabaseSummary {
+  id: string;
+  name: string;
+  candidate_count: number;
+  source_type: string;
 }
 
 interface CandidateData {
@@ -58,6 +66,7 @@ export default function RunDashboard() {
   const [topUpCount, setTopUpCount] = useState(2);
   const [topUpLoading, setTopUpLoading] = useState(false);
   const [topUpError, setTopUpError] = useState<string | null>(null);
+  const [serverTalentDatabase, setServerTalentDatabase] = useState<TalentDatabaseSummary | null>(null);
   const [browserTalentDatabase] = useState<BrowserTalentDatabase | null>(() =>
     loadBrowserTalentDatabase(runId)
   );
@@ -113,6 +122,23 @@ export default function RunDashboard() {
     }
     load();
   }, [isLocalRun, runId]);
+
+  useEffect(() => {
+    if (isLocalRun || browserTalentDatabase || !run?.talent_database_id) return;
+
+    async function loadDatabaseMetadata() {
+      const res = await fetch('/api/talent-databases', { cache: 'no-store' });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!Array.isArray(data.databases)) return;
+      const selected = data.databases.find((database: TalentDatabaseSummary) =>
+        database.id === run?.talent_database_id
+      );
+      if (selected) setServerTalentDatabase(selected);
+    }
+
+    void loadDatabaseMetadata();
+  }, [browserTalentDatabase, isLocalRun, run?.talent_database_id]);
 
   useEffect(() => {
     if (isLocalRun) return;
@@ -257,8 +283,8 @@ export default function RunDashboard() {
   }
   const selectedCount = candidates.filter((candidate) => candidate.review_decision === 'selected').length;
   const reviewedCount = candidates.filter((candidate) => candidate.review_decision !== 'undecided').length;
-  const scannedCount = browserTalentDatabase?.candidate_count ?? 120;
-  const sourceLabel = browserTalentDatabase?.name ?? 'Seeded ATS + portfolio corpus';
+  const scannedCount = browserTalentDatabase?.candidate_count ?? serverTalentDatabase?.candidate_count ?? 120;
+  const sourceLabel = browserTalentDatabase?.name ?? serverTalentDatabase?.name ?? 'Seeded ATS + portfolio corpus';
   const unseenCount = Math.max(0, scannedCount - candidates.length);
 
   return (

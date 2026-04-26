@@ -78,29 +78,74 @@ async function loadRunTalentPool(
   };
 }
 
-function buildUploadedTalentPool(value: unknown): TalentPool | null {
-  if (!isRecord(value) || !Array.isArray(value.candidates) || value.candidates.length === 0) {
+async function loadSelectedTalentPool(
+  supabase: ReturnType<typeof createServiceClient>,
+  value: unknown
+): Promise<TalentPool | null> {
+  if (!isRecord(value)) {
     return null;
   }
-  if (value.candidates.length > 500) {
+  const rawDatabaseIds = Array.isArray(value.database_ids) ? value.database_ids : [];
+  const databaseIds = rawDatabaseIds.filter((id): id is string =>
+    typeof id === 'string' && id.length > 0 && id !== SEEDED_DATABASE_ID
+  );
+  const rawCandidates = Array.isArray(value.candidates) ? value.candidates : [];
+  if (databaseIds.length === 0 && rawCandidates.length === 0) return null;
+
+  if (rawCandidates.length > 500) {
     throw new Error('Uploaded browser database is limited to 500 candidates.');
   }
 
-  const normalized = normalizeUploadedCandidates(value.candidates);
-  const unique = new Map(normalized.map((candidate) => [candidate.profile.id, candidate]));
-  const candidates = Array.from(unique.values());
+  const poolById = new Map<string, CandidateProfile>();
   const hidden: Record<string, HiddenState> = {};
+  const labels: string[] = [];
 
-  for (const candidate of candidates) {
+  if (databaseIds.length > 0) {
+    const [{ data: databases, error: databaseError }, { data: rows, error: rowsError }] = await Promise.all([
+      supabase
+        .from('talent_databases')
+        .select('id, name')
+        .in('id', databaseIds),
+      supabase
+        .from('talent_database_candidates')
+        .select('database_id, pool_candidate_id, profile_json, persona_hidden_state')
+        .in('database_id', databaseIds)
+        .order('created_at', { ascending: true }),
+    ]);
+
+    if (databaseError) throw new Error(`selected talent database metadata unavailable: ${databaseError.message}`);
+    if (rowsError) throw new Error(`selected talent database candidates unavailable: ${rowsError.message}`);
+
+    const namesById = new Map((databases ?? []).map((database) => [database.id as string, database.name as string]));
+    for (const databaseId of databaseIds) {
+      labels.push(namesById.get(databaseId) ?? 'Uploaded talent database');
+    }
+    for (const row of rows ?? []) {
+      const profile = row.profile_json as CandidateProfile;
+      poolById.set(profile.id, profile);
+      if (row.persona_hidden_state) {
+        hidden[profile.id] = row.persona_hidden_state as HiddenState;
+      }
+    }
+  }
+
+  const normalized = normalizeUploadedCandidates(rawCandidates);
+  for (const candidate of normalized) {
+    poolById.set(candidate.profile.id, candidate.profile);
     if (candidate.hiddenState) hidden[candidate.profile.id] = candidate.hiddenState;
   }
 
+  const pool = Array.from(poolById.values());
+  if (pool.length === 0) {
+    throw new Error('selected talent database has no candidates');
+  }
+
   return {
-    pool: candidates.map((candidate) => candidate.profile),
+    pool,
     hidden,
     sourceLabel: typeof value.name === 'string' && value.name.trim()
       ? value.name.trim()
-      : 'Browser uploaded talent database',
+      : labels.join(' + ') || 'Selected talent database',
   };
 }
 
@@ -345,7 +390,7 @@ export async function POST(
   }
 
   const excludedIds = new Set((existing ?? []).map((candidate) => candidate.pool_candidate_id as string));
-  const talentPool = buildUploadedTalentPool(body.talent_database) ??
+  const talentPool = (await loadSelectedTalentPool(supabase, body.talent_database)) ??
     (await loadRunTalentPool(supabase, (run.talent_database_id as string | null) ?? null));
   const { pool, hidden } = talentPool;
   const remainingPool = pool.filter((profile) => !excludedIds.has(profile.id));

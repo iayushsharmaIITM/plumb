@@ -1,11 +1,14 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import UploadForm from '@/components/plumb/upload-form';
+import RunHistoryPanel from '@/components/plumb/run-history-panel';
 import Link from 'next/link';
 
 export default function Home() {
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<'run' | 'history'>('run');
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -46,11 +49,41 @@ export default function Home() {
             <div className="flex-1 h-px bg-border" />
           </div>
 
-          {/* Upload form */}
-          <div className="card p-6 sm:p-8">
-            <UploadForm
-              onSubmit={(runId) => router.push(`/runs/${runId}`)}
-            />
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 rounded-lg border border-border bg-surface-1 p-1">
+              <button
+                type="button"
+                onClick={() => setActiveTab('run')}
+                className={`rounded-md px-3 py-2 text-sm font-semibold transition-colors ${
+                  activeTab === 'run'
+                    ? 'bg-surface-3 text-foreground'
+                    : 'text-zinc-500 hover:text-zinc-300'
+                }`}
+              >
+                Run
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('history')}
+                className={`rounded-md px-3 py-2 text-sm font-semibold transition-colors ${
+                  activeTab === 'history'
+                    ? 'bg-surface-3 text-foreground'
+                    : 'text-zinc-500 hover:text-zinc-300'
+                }`}
+              >
+                History
+              </button>
+            </div>
+
+            {activeTab === 'run' ? (
+              <div className="card p-6 sm:p-8">
+                <UploadForm
+                  onSubmit={(runId) => router.push(`/runs/${runId}`)}
+                />
+              </div>
+            ) : (
+              <RunHistoryPanel />
+            )}
           </div>
 
           {/* How it works */}

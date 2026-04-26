@@ -10,11 +10,19 @@ export interface BrowserTalentDatabase {
   name: string;
   candidate_count: number;
   source_type?: string;
-  candidates: unknown[];
+  database_ids?: string[];
+  candidates?: unknown[];
 }
 
 export function browserTalentDatabaseStorageKey(runId: string): string {
   return `plumb:run-talent-database:${runId}`;
+}
+
+export function saveBrowserTalentDatabase(runId: string, database: BrowserTalentDatabase): void {
+  if (typeof window === 'undefined') return;
+  const payload = JSON.stringify(database);
+  window.sessionStorage.setItem(browserTalentDatabaseStorageKey(runId), payload);
+  window.localStorage.setItem(browserTalentDatabaseStorageKey(runId), payload);
 }
 
 export async function runPipeline(
@@ -126,16 +134,22 @@ function jsonBody(body: Record<string, unknown>): RequestInit {
 export function loadBrowserTalentDatabase(runId: string): BrowserTalentDatabase | null {
   if (typeof window === 'undefined') return null;
   try {
-    const raw = window.sessionStorage.getItem(browserTalentDatabaseStorageKey(runId));
+    const key = browserTalentDatabaseStorageKey(runId);
+    const raw = window.sessionStorage.getItem(key) ?? window.localStorage.getItem(key);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as Partial<BrowserTalentDatabase>;
-    if (!Array.isArray(parsed.candidates) || parsed.candidates.length === 0) return null;
+    const hasCandidates = Array.isArray(parsed.candidates) && parsed.candidates.length > 0;
+    const hasDatabaseIds = Array.isArray(parsed.database_ids) && parsed.database_ids.length > 0;
+    if (!hasCandidates && !hasDatabaseIds) return null;
     return {
       name: typeof parsed.name === 'string' && parsed.name.trim() ? parsed.name : 'Browser uploaded database',
       candidate_count: typeof parsed.candidate_count === 'number'
         ? parsed.candidate_count
-        : parsed.candidates.length,
+        : parsed.candidates?.length ?? 0,
       source_type: typeof parsed.source_type === 'string' ? parsed.source_type : 'browser_upload',
+      database_ids: Array.isArray(parsed.database_ids)
+        ? parsed.database_ids.filter((id): id is string => typeof id === 'string' && id.length > 0)
+        : undefined,
       candidates: parsed.candidates,
     };
   } catch {

@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { saveLocalRun } from '@/lib/browser-local-run';
+import { saveBrowserTalentDatabase, type BrowserTalentDatabase } from '@/lib/pipeline/orchestrator';
+import { addRunHistory } from '@/lib/run-history';
 
 interface UploadFormProps {
   onSubmit: (runId: string) => void;
@@ -54,7 +56,7 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
       source_type: 'seeded',
     },
   ]);
-  const [selectedDatabaseId, setSelectedDatabaseId] = useState(SEEDED_DATABASE_ID);
+  const [selectedDatabaseIds, setSelectedDatabaseIds] = useState<string[]>([SEEDED_DATABASE_ID]);
   const [uploadingDatabase, setUploadingDatabase] = useState(false);
   const [persistentUploadsReady, setPersistentUploadsReady] = useState(false);
   const [databaseMessage, setDatabaseMessage] = useState('');
@@ -160,7 +162,7 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
             storage: 'server',
           };
           setDatabases((current) => upsertDatabase(current, serverDatabase));
-          setSelectedDatabaseId(serverDatabase.id);
+          setSelectedDatabaseIds([serverDatabase.id]);
           setDatabaseMessage(`Uploaded ${serverDatabase.candidate_count} candidates from ${file.name}.`);
           return;
         } catch {
@@ -177,7 +179,7 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
         candidates,
       };
       setDatabases((current) => upsertDatabase(current, browserDatabase));
-      setSelectedDatabaseId(browserDatabase.id);
+      setSelectedDatabaseIds([browserDatabase.id]);
       setDatabaseMessage(`Loaded ${browserDatabase.candidate_count} candidates from ${file.name}. This run will match against that file.`);
     } catch (uploadError) {
       setDatabaseWarning((uploadError as Error).message);
@@ -195,8 +197,15 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
     }
     setError('');
     setLoading(true);
-    const selectedDatabase = databases.find((database) => database.id === selectedDatabaseId);
-    const browserDatabase = selectedDatabase?.storage === 'browser' ? selectedDatabase : null;
+    const selectedDatabases = selectedDatabaseIds
+      .map((id) => databases.find((database) => database.id === id))
+      .filter((database): database is TalentDatabaseSummary => Boolean(database));
+    const talentSelection = buildTalentSelection(selectedDatabases);
+    const firstServerDatabaseId = selectedDatabases.find((database) =>
+      database.id !== SEEDED_DATABASE_ID && database.storage !== 'browser'
+    )?.id ?? null;
+    const canUseLocalFallback = selectedDatabases.length > 0 &&
+      selectedDatabases.every((database) => database.storage === 'browser');
     try {
       const res = await fetch('/api/runs', {
         method: 'POST',
@@ -204,49 +213,48 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
         body: JSON.stringify({
           jd_text: jd,
           recruiter_brief: brief || null,
-          talent_database_id:
-            selectedDatabaseId === SEEDED_DATABASE_ID || browserDatabase ? null : selectedDatabaseId,
+          talent_database_id: firstServerDatabaseId,
           turnstile_token: turnstileToken,
         }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to create run');
-      if (browserDatabase && browserDatabase.candidates) {
-        sessionStorage.setItem(
-          `plumb:run-talent-database:${data.run_id}`,
-          JSON.stringify({
-            name: browserDatabase.name,
-            candidate_count: browserDatabase.candidate_count,
-            source_type: browserDatabase.source_type,
-            candidates: browserDatabase.candidates,
-          })
-        );
+      if (talentSelection) {
+        saveBrowserTalentDatabase(data.run_id, talentSelection);
       }
+      addRunHistory({
+        run_id: data.run_id,
+        jd_text: jd,
+        source_label: talentSelection?.name ?? 'Seeded ATS + portfolio corpus',
+        source_count: talentSelection?.candidate_count ?? 120,
+        created_at: new Date().toISOString(),
+        status: 'pending',
+      });
       onSubmit(data.run_id);
     } catch (err) {
-      if (browserDatabase && browserDatabase.candidates) {
+      if (canUseLocalFallback && talentSelection?.candidates?.length) {
         const localRunId = `local-${crypto.randomUUID?.() ?? Date.now().toString(36)}`;
         saveLocalRun({
           id: localRunId,
           jd_text: jd,
           recruiter_brief: brief || null,
           talent_database: {
-            name: browserDatabase.name,
-            candidate_count: browserDatabase.candidate_count,
-            source_type: browserDatabase.source_type,
-            candidates: browserDatabase.candidates,
+            name: talentSelection.name,
+            candidate_count: talentSelection.candidate_count,
+            source_type: talentSelection.source_type,
+            candidates: talentSelection.candidates,
           },
           created_at: new Date().toISOString(),
         });
-        sessionStorage.setItem(
-          `plumb:run-talent-database:${localRunId}`,
-          JSON.stringify({
-            name: browserDatabase.name,
-            candidate_count: browserDatabase.candidate_count,
-            source_type: browserDatabase.source_type,
-            candidates: browserDatabase.candidates,
-          })
-        );
+        saveBrowserTalentDatabase(localRunId, talentSelection);
+        addRunHistory({
+          run_id: localRunId,
+          jd_text: jd,
+          source_label: talentSelection.name,
+          source_count: talentSelection.candidate_count,
+          created_at: new Date().toISOString(),
+          status: 'complete',
+        });
         onSubmit(localRunId);
         return;
       }
@@ -258,6 +266,18 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
       }
       setLoading(false);
     }
+  }
+
+  function toggleDatabaseSelection(databaseId: string) {
+    setSelectedDatabaseIds((current) => {
+      const selected = current.includes(databaseId);
+      if (selected) {
+        const next = current.filter((id) => id !== databaseId);
+        return next.length > 0 ? next : [SEEDED_DATABASE_ID];
+      }
+      if (databaseId === SEEDED_DATABASE_ID) return [SEEDED_DATABASE_ID];
+      return [...current.filter((id) => id !== SEEDED_DATABASE_ID), databaseId];
+    });
   }
 
   return (
@@ -305,19 +325,48 @@ export default function UploadForm({ onSubmit }: UploadFormProps) {
           </label>
         </div>
 
-        <select
-          id="database-select"
-          value={selectedDatabaseId}
-          onChange={(event) => setSelectedDatabaseId(event.target.value)}
-          className="w-full rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm text-foreground focus:border-brand focus:outline-none"
-          disabled={loading}
-        >
-          {databases.map((database) => (
-            <option key={database.id} value={database.id}>
-              {database.name} · {database.candidate_count} candidates
-            </option>
-          ))}
-        </select>
+        <div id="database-select" className="grid gap-2">
+          {databases.map((database) => {
+            const checked = selectedDatabaseIds.includes(database.id);
+            return (
+              <label
+                key={database.id}
+                className={`flex cursor-pointer items-center justify-between gap-3 rounded-lg border px-3 py-2 transition-colors ${
+                  checked
+                    ? 'border-brand/50 bg-brand/10'
+                    : 'border-border bg-surface-2 hover:bg-surface-3'
+                }`}
+              >
+                <span className="flex min-w-0 items-center gap-3">
+                  <input
+                    type="checkbox"
+                    checked={checked}
+                    onChange={() => toggleDatabaseSelection(database.id)}
+                    disabled={loading}
+                    className="h-4 w-4 accent-brand"
+                  />
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-medium text-zinc-300">
+                      {database.name}
+                    </span>
+                    <span className="text-xs text-zinc-600">
+                      {database.candidate_count} candidates · {database.source_type}
+                    </span>
+                  </span>
+                </span>
+                {checked && (
+                  <span className="shrink-0 rounded-md bg-brand/15 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-brand">
+                    Selected
+                  </span>
+                )}
+              </label>
+            );
+          })}
+        </div>
+
+        <p className="text-xs text-zinc-600">
+          Selected source: {selectionSummary(databases, selectedDatabaseIds)}
+        </p>
 
         {databaseMessage && (
           <p className="rounded-lg border border-recommended/20 bg-recommended/10 px-3 py-2 text-xs text-recommended">
@@ -441,6 +490,34 @@ function csvRows(text: string): string[][] {
   row.push(cell);
   rows.push(row);
   return rows;
+}
+
+function buildTalentSelection(databases: TalentDatabaseSummary[]): BrowserTalentDatabase | null {
+  const selected = databases.filter((database) => database.id !== SEEDED_DATABASE_ID);
+  if (selected.length === 0) return null;
+
+  const databaseIds = selected
+    .filter((database) => database.storage !== 'browser')
+    .map((database) => database.id);
+  const candidates = selected.flatMap((database) =>
+    database.storage === 'browser' ? database.candidates ?? [] : []
+  );
+
+  return {
+    name: selected.map((database) => database.name).join(' + '),
+    candidate_count: selected.reduce((sum, database) => sum + database.candidate_count, 0),
+    source_type: selected.length > 1 ? 'multi_database' : selected[0].source_type,
+    database_ids: databaseIds.length > 0 ? databaseIds : undefined,
+    candidates: candidates.length > 0 ? candidates : undefined,
+  };
+}
+
+function selectionSummary(databases: TalentDatabaseSummary[], selectedIds: string[]): string {
+  const selected = selectedIds
+    .map((id) => databases.find((database) => database.id === id))
+    .filter((database): database is TalentDatabaseSummary => Boolean(database));
+  const count = selected.reduce((sum, database) => sum + database.candidate_count, 0);
+  return `${selected.map((database) => database.name).join(' + ')} · ${count.toLocaleString()} candidates`;
 }
 
 function upsertDatabase(
